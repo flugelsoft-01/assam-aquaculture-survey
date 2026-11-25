@@ -1,8 +1,8 @@
 {
-  "name": "flugelsoft-matsyasample-nesfic-d32",
+  "name": "flugelsoft-matsyasample-assam",
   "private": true,
   "version": "1.0.0",
-  "description": "Flugelsoft Labs MatsyaSample Assam: Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation (NESFIC-D-32) for Fishery Department, Government of Assam.",
+  "description": "Flugelsoft Labs MatsyaSample Assam: Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation (NESFIC-D-32) for Directorate of Fisheries, Government of Assam.",
   "author": "Kalyanjit Hatibaruah — Flugelsoft Labs",
   "type": "module",
   "scripts": {

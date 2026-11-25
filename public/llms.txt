@@ -1,26 +1,19 @@
 # Flugelsoft Labs — MatsyaSample Assam (NESFIC-D-32)
 
-> Scientifically defensible, repeatable rotating sample survey, digital harvest diaries, sample weighing verification, and confidence-interval estimation for Assam pond and tank aquaculture (NESFIC-D-32, Fishery Department, Government of Assam).
+> Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation
+> North East Seva First Innovation Challenge (NESFIC 2026) — Problem Statement NESFIC-D-32
+> Challenge Owner: Fishery Department, Government of Assam / Directorate of Fisheries
+> Lead Entity: Flugelsoft Labs
+> Lead Applicant: Kalyanjit Hatibaruah
 
-## Lead Applicant & Organization
-- **Lead Applicant**: Kalyanjit Hatibaruah
-- **Lead Entity**: Flugelsoft Labs
-- **Region**: Assam, India (IN-AS)
-- **Challenge**: North East Seva First Innovation Challenge (NESFIC) 2026 — NESFIC-D-32
-- **Challenge Owner**: Fishery Department • Government of Assam / Directorate of Fisheries
-- **Live URL**: https://flugelsoft-matsyasample.pages.dev/
-- **GitHub Repository**: https://github.com/flugelsoft-01/nesfic-d32-pond-tank-survey
+## Routes
+- `/` : Rotating Sample Frame & Survey Ledger (Nagaon, Kamrup, Dima Hasao, Cachar, Barpeta)
+- `/sampling-simulator` : Interactive Stratified Sampling & Confidence Interval Simulator
+- `/estimates-audit` : District & State Horvitz-Thompson Estimates Audit (CSV Export)
+- `/proposal` : Complete 12-Section NESFIC-D-32 Proposal & Official PDF Downloads
+- `/tutorial` : Interactive Application Tutorial & Statistical Methodology Guide
 
-## Key Routes (SEO & GEO Friendly)
-- `/` or `/assam-pond-tank-sample-survey-ledger` — Rotating Sample Frame & Pond/Tank Survey Ledger (https://flugelsoft-matsyasample.pages.dev/)
-- `/survey-simulator` or `/stratified-sampling-confidence-interval-simulator` — Interactive Stratified Sampling & Confidence Interval Simulator (https://flugelsoft-matsyasample.pages.dev/survey-simulator)
-- `/district-estimates` or `/assam-aquaculture-production-estimates-audit` — District & State Production Estimates with 95% Confidence Intervals & Audit Export (https://flugelsoft-matsyasample.pages.dev/district-estimates)
-- `/proposal` or `/nesfic-d32-aquaculture-survey-proposal` — Complete 12-Section NESFIC-D-32 Proposal & Downloadable PDFs (https://flugelsoft-matsyasample.pages.dev/proposal)
-- `/tutorial` or `/matsyasample-assam-tutorial` — Comprehensive Tutorial & Guide on statistical sampling, harvest diaries, and confidence intervals (https://flugelsoft-matsyasample.pages.dev/tutorial)
-
-## Indicative Pilot & Statewide Districts (Assam, India)
-- **Nagaon (26.3480° N, 92.6838° E):** High-production freshwater pond and tank aquaculture district
-- **Kamrup (26.1445° N, 91.7362° E):** Medium-intensity peri-urban & rural pond aquaculture district
-- **Dima Hasao (25.1667° N, 93.0167° E):** Geographically distinct hill-district tank & pond cluster
-- **Cachar (24.8333° N, 92.7789° E):** Barak Valley floodplain pond & tank cluster
-- **Barpeta (26.3229° N, 91.0063° E):** Lower Assam high-density rural aquaculture belt
+## Deliverables
+- `/docs/Flugelsoft_Labs_NESFIC-D-32_Proposal.pdf`
+- `/docs/Flugelsoft_Labs_NESFIC-D-32_Proof_of_Work.pdf`
+- `/docs/Flugelsoft_Labs_NESFIC-D-32_Proposal_CopyPaste.txt`

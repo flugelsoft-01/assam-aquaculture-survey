@@ -14,38 +14,38 @@ export interface BudgetItem {
 
 export const BUDGET_ALLOCATION: BudgetItem[] = [
   {
-    head: 'Technical Engineering & Statistical Systems Team',
+    head: 'Technical Engineering & Statistical Systems',
     scope: 'Lead Architect, Survey Statistician, Offline PWA & Backend Engineers (6 months)',
     amountLakhs: 20.0,
     sharePct: 50.0,
   },
   {
     head: 'Field Verification & Sample Weighing Kits',
-    scope: 'Rugged field tablets, BLE digital hanging/platform scales & solar power banks (3 pilot districts)',
+    scope: 'Rugged tablets, BLE digital hanging scales & waterproof tags for 3 pilot districts',
     amountLakhs: 6.0,
     sharePct: 15.0,
   },
   {
-    head: 'Aquaculture Sampling & DES/ICAR-CIFRI Alignment',
-    scope: 'Stratification design validation, harvest diary protocols & statistical audit methodology',
+    head: 'Statistical Calibration & DES/ICAR-CIFRI Alignment',
+    scope: 'Stratified Horvitz–Thompson estimator validation, variance modeling & SOPs',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: 'India-Region Cloud, Estimator Engine & Security',
-    scope: 'Managed PostgreSQL/PostGIS, reproducible R/Python estimator API, KMS & security audit',
+    head: 'India-Region Cloud, PostGIS & Security Audit',
+    scope: 'NIC MeghRaj / Mumbai cloud hosting, KMS encryption & RBAC security testing',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: '3-District Assam Pilot, Enumerator Training & Travel',
-    scope: 'Nagaon, Kamrup & Dima Hasao field onboarding, bilingual training & sample weighing trials',
+    head: '3-District Pilot, Enumerator Training & Travel',
+    scope: 'Nagaon, Kamrup & Dima Hasao onboarding, bilingual training & field audits',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: 'Documentation, Open Standards & Contingency',
-    scope: 'Auditable methodology handbook, SOPs for Fishery staff & operational buffer',
+    head: 'Documentation, Open-Audit Handover & Contingency',
+    scope: 'Methodological handbooks, reproducible audit scripts & operational buffer',
     amountLakhs: 2.0,
     sharePct: 5.0,
   },
@@ -54,12 +54,12 @@ export const BUDGET_ALLOCATION: BudgetItem[] = [
 export const PROPOSAL_METADATA = {
   challengeId: 'NESFIC-D-32',
   challengeTitle: 'Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation',
-  sponsor: 'Fishery Department • Government of Assam / Directorate of Fisheries',
+  sponsor: 'Fishery Department, Government of Assam / Directorate of Fisheries',
   organization: 'Flugelsoft Labs',
   leadApplicant: 'Kalyanjit Hatibaruah',
-  demoVideoUrl: 'https://flugelsoft-matsyasample.pages.dev/demo',
-  productUrl: 'https://flugelsoft-matsyasample.pages.dev/',
-  githubUrl: 'https://github.com/flugelsoft-01/nesfic-d32-pond-tank-survey',
+  demoVideoUrl: 'https://example.com/demo',
+  productUrl: 'https://example.com',
+  problemStatementUrl: 'https://startup.assam.gov.in/nesfic26/problem-statements/nesfic-d-32',
 };
 
 export const PROPOSAL_SECTIONS: ProposalSection[] = [
@@ -68,145 +68,161 @@ export const PROPOSAL_SECTIONS: ProposalSection[] = [
     title: '1. Problem understanding & user workflow',
     promptHint:
       'Explain the problem, users/beneficiaries and current workflow. Identify the specific gap(s) addressed and the intended outcome.',
-    content: `Assam reported approximately 4.75 lakh MT of fish production in 2023–24, with a major share originating from dispersed private ponds and community tanks where harvesting is partial and spread across the year. Attempting annual complete enumeration across lakhs of water bodies is operationally impractical and statistically fragile.
+    content: `Assam reported approximately 4.75 lakh MT of fish production in 2023–24, with a major share coming from dispersed private ponds and community tanks where harvesting is partial and staggered across the year. Attempting annual complete enumeration across lakhs of water bodies is operationally impractical and statistically fragile.
 
-Key users and stakeholders include fish farmers, Directorate of Fisheries field and statistical staff, Directorate of Economics & Statistics (DES), ICAR-CIFRI technical collaborators, and policy planners. Currently, estimation relies heavily on annual farmer recall and uniform productivity assumptions per hectare.
+Primary users and beneficiaries include Directorate of Fisheries field and statistical staff, sampled fish farmers, Directorate of Economics & Statistics (DES) analysts, ICAR-CIFRI technical collaborators, and state policy planners. Under the current workflow, district production figures rely heavily on end-of-year farmer recall and uniform per-hectare productivity assumptions, compiled manually from block registers into spreadsheets.
 
-This creates four critical gaps: (1) Weak farmer recall across multiple partial harvests; (2) Missed harvests or double counting when fish are sold in staggered lots; (3) Unrecorded self-consumption and direct farm-gate sales; and (4) Uniform yield assumptions that fail to capture differences in stocking density, species mix, feeding, and management, with no explicit measure of statistical uncertainty. The intended outcome of MatsyaSample Assam is a scientifically defensible, repeatable rotating sample survey system—not compulsory reporting by every farmer—that produces transparent district and State production estimates with explicit confidence intervals.`,
+This creates four critical gaps: (1) Severe recall bias across multiple partial harvests; (2) Missed harvests or double counting when staggered lots are sold to intermediaries or transferred across ponds; (3) Unrecorded household self-consumption and direct farm-gate sales; and (4) Uniform yield assumptions that ignore differences in stocking density, species mix, and culture intensity, with no explicit confidence intervals.
+
+The intended outcome of MatsyaSample Assam is a scientifically defensible, repeatable rotating sample survey system—not compulsory reporting by every farmer—that delivers transparent district and State production estimates with explicit 95% confidence intervals and Relative Standard Error (RSE%).`,
   },
   {
     id: 2,
     title: '2. Proposed solution & key features',
     promptHint:
       'Describe the solution, main modules/functions, user interaction and what changes versus the current approach.',
-    content: `Flugelsoft Labs proposes MatsyaSample Assam, a digitally supported statistical sampling and estimation platform purpose-built for Assam's pond and tank aquaculture ecosystem.
+    content: `Flugelsoft Labs proposes MatsyaSample Assam, an offline-first statistical sampling, field-diary, and production estimation platform purpose-built for Assam's pond and tank aquaculture ecosystem.
 
 Core modules include:
-1. Rotating Fishery-Resource Frame & Stratifier: Ingests the updated fishery-resource frame and stratifies ponds/tanks by water-spread size (Smaller than 0.2 ha, 0.2–1.0 ha, Greater Than 1.0 ha), resource type (private pond, community tank, reclaimed tank), and culture intensity (extensive, semi-intensive, intensive), drawing random rotating panels (e.g., 50% annual rotation) to avoid respondent fatigue.
-2. Digital Field Schedules (Offline-First): Replaces paper registers with structured mobile schedules for sampled farms capturing baseline stocking, species, feed, and management practices.
-3. Partial-Harvest & Farm-Gate Diaries: Lightweight mobile/SMS harvest diaries for sampled farmers and enumerators to log staggered harvests, household self-consumption, and direct farm-gate sales in near real time.
-4. Sample Weighing & Field Verification: Supports spot-haul weighing via Bluetooth digital scales or geo-tagged photo verification for selected observations—acting as an aquaculture equivalent of crop-cutting experiments.
-5. Reproducible Confidence-Interval Estimator: Computes district and State totals using stratified Horvitz–Thompson estimators, outputting 95% confidence intervals, Relative Standard Error (RSE%), and locked methodology snapshots for full auditability.`,
+1. Rotating Fishery-Resource Frame & Stratifier: Ingests the updated resource frame and stratifies ponds/tanks by water-spread area (<0.2 ha, 0.2–1.0 ha, >1.0 ha), resource type (private pond, community tank, reclaimed tank), and culture intensity (extensive, semi-intensive, intensive). Draws random rotating panels (e.g., 50% annual replacement) to prevent respondent fatigue.
+2. Offline-First Digital Field Schedules: Replaces paper forms with structured mobile schedules for sampled units capturing baseline stocking, species mix, feed regime, and primary harvester identity.
+3. Multilingual Partial-Harvest & Farm-Gate Diaries: Lightweight mobile/SMS harvest diaries in Assamese, Bengali, Bodo, and English enabling sampled farmers and enumerators to log partial harvests, household self-consumption, and farm-gate sales in near real time.
+4. Sample Weighing Verification: Supports randomized spot-haul weighing via Bluetooth digital scales or geo-tagged photo verification—serving as an aquaculture crop-cutting equivalent.
+5. Reproducible Confidence-Interval Estimator: Computes district and State totals via stratified Horvitz–Thompson estimators with finite population correction, outputting 95% confidence intervals, RSE%, and locked audit snapshots.
+
+Unlike annual recall and flat per-hectare multipliers, MatsyaSample Assam measures variance empirically and quantifies uncertainty transparently.`,
   },
   {
     id: 3,
     title: '3. Describe User Journey, Wireframes, Prototype & Proof of Work',
     promptHint:
       'Describe the proposed user journey/workflow and provide supporting artifacts such as wireframes, mock-ups, prototypes, MVPs, simulation/model outputs, test results, or evidence from prior pilots/deployments.',
-    content: `The workflow connects four user roles:
-- Fishery Statistical Officer: Configures stratification rules over the updated resource frame, draws random rotating samples, and monitors district RSE% and diary compliance.
-- Field Enumerator: Conducts baseline schedules on sampled ponds/tanks offline, performs scheduled sample weighings, and reconciles discrepancies.
-- Sampled Fish Farmer: Logs partial harvests, self-consumption, and farm-gate sales via simple Assamese/Bengali/Bodo/English harvest diary prompts.
-- DES / ICAR-CIFRI Reviewer: Audits locked estimation runs, sampling weights, assumptions, and 95% confidence intervals.
+    content: `The end-to-end user journey connects four roles:
+1. Fishery Statistical Officer: Uploads/validates the district resource frame, configures stratification rules, draws random rotating panels, and monitors district RSE% and diary completion.
+2. Field Enumerator (Fishery Demonstrator): Syncs assigned sampled units offline, conducts baseline stocking schedules, performs scheduled spot-haul sample weighings, and resolves recall-drift alerts.
+3. Sampled Fish Farmer: Logs partial harvests, self-consumption, and direct farm-gate sales through 3-tap local-language mobile prompts or SMS shortcodes.
+4. DES / ICAR-CIFRI Reviewer: Audits locked estimation runs, design weights, imputation flags, and 95% confidence intervals before state publication.
 
-As Proof of Work, Flugelsoft Labs has built an interactive web prototype (MatsyaSample Assam) featuring: (a) a Rotating Sample Frame & Survey Ledger across Nagaon, Kamrup, Dima Hasao, Cachar, and Barpeta showing 5-stage verification timelines; (b) an Interactive Stratified Sampling & CI Simulator that models sample size, partial-harvest frequency, and injects recall-bias or double-counting faults to demonstrate how diaries and sample weighing tighten 95% confidence intervals; and (c) a District & State Estimates Audit dashboard with exportable CSV dossiers. Full architecture diagrams and simulation outputs are included in the Proof of Work PDF.`,
+As Proof of Work, Flugelsoft Labs has built a functional web prototype (MatsyaSample Assam) featuring:
+- Rotating Sample Frame & Survey Ledger across Nagaon, Kamrup, Dima Hasao, Cachar, and Barpeta with 5-stage verification timelines and SHA-256 snapshot hashes.
+- Interactive Stratified Sampling & CI Simulator modeling sample size, partial-harvest frequency, and fault-injection (recall bias, double counting, missed self-consumption) to demonstrate live Horvitz–Thompson totals and 95% confidence interval tightening.
+- District & State Estimates Audit dashboard with exportable CSV dossiers.
+
+Full wireframes, statistical simulation charts, and prototype screenshots are compiled in the attached Proof of Work PDF.`,
   },
   {
     id: 4,
     title: '4. Technology & solution architecture',
     promptHint:
       'Describe stack and architecture: software/hardware, AI/ML models or algorithms, methods/rules, APIs/integrations, data flow and hosting.',
-    content: `MatsyaSample Assam uses an offline-first edge-cloud statistical architecture designed for rural Assam connectivity:
-- Edge & Field Layer: Progressive Web App (PWA) and Android client with IndexedDB/SQLite local persistence, GPS polygon/point capture, and optional Bluetooth (BLE) digital hanging-scale integration for sample weighing.
-- Core Survey & Frame Layer: TypeScript/Node.js API gateway and PostgreSQL/PostGIS database storing the versioned fishery-resource frame, stratum definitions, rotating panel assignments, and immutable field schedules.
-- Statistical Estimation Engine: Python (SciPy/Statsmodels) microservice implementing stratified random sampling, Neyman/proportional allocation, finite population correction (FPC), Horvitz–Thompson weighted totals, and variance/95% CI calculation. Every estimation run stores a SHA-256 hash of input data, weights, and parameters for exact reproducibility.
-- Anomaly & Quality Rules: Deterministic checks flag recall-drift (diary vs. stocking/feed plausibility), suspected duplicate harvest entries, and missed partial-harvest intervals for enumerator follow-up.
-- Hosting & Security: Containerized deployment on India-region cloud (NIC MeghRaj / AWS Mumbai compatible) with TLS 1.3, role-based access control, and automated encrypted backups.`,
+    content: `MatsyaSample Assam uses an offline-first edge-cloud statistical architecture engineered for rural Assam connectivity:
+- Edge & Field Layer: React/TypeScript Progressive Web App (PWA) and Android client with IndexedDB/SQLite local storage, GPS coordinate capture, optional Bluetooth Low Energy (BLE) digital hanging-scale integration, and SMS fallback for low-bandwidth blocks.
+- Core Survey & Frame API Layer: TypeScript/Node.js REST APIs backed by PostgreSQL/PostGIS storing versioned fishery-resource frames, stratum boundaries, rotating panel assignments, and append-only field schedules.
+- Statistical Estimation Engine: Python (SciPy/Statsmodels) microservice implementing stratified random sampling, Neyman/proportional allocation, finite population correction (FPC), Horvitz–Thompson weighted totals, and Taylor-linearized variance/95% CI estimation.
+- Deterministic Quality & Anomaly Rules: Rule-based checks flag recall-drift (diary yield vs. stocking/feed plausibility), suspected inter-pond transfer double counting, and overdue partial-harvest intervals for enumerator verification.
+- Reproducibility & Hosting: Every estimation run records a SHA-256 hash of input records, stratum weights, and parameters. Containerized deployment targets India-region cloud infrastructure (NIC MeghRaj / AWS Mumbai compatible) with TLS 1.3 and role-based access control.`,
   },
   {
     id: 5,
     title: '5. Development methodology & intermediate steps',
     promptHint:
       'Show the sequence from discovery/requirements through design, prototype, MVP, testing and refinement, with key outputs.',
-    content: `We follow an iterative 4-phase delivery methodology co-designed with the Directorate of Fisheries, DES, and ICAR-CIFRI:
-- Phase 1 — Frame Audit & Statistical Design (Weeks 1–4): Clean and stratify the updated Assam pond/tank resource frame; calibrate stratum variances using historical production and fish-seed records; finalize rotating panel rules and sample size targets for Smaller than 3% district RSE.
-- Phase 2 — Digital Schedules, Diaries & Weighing MVP (Weeks 5–10): Build offline-first enumerator schedules, multilingual farmer harvest diaries, and BLE/photo sample weighing modules; validate usability with Fishery Demonstrators.
-- Phase 3 — 3-District Contrasting Pilot (Weeks 11–18): Deploy in Nagaon (high-production), Kamrup (medium-intensity), and Dima Hasao (geographically distinct hill district) covering ~850 sampled water bodies across two harvest quarters.
-- Phase 4 — Estimator Calibration & Audit Handover (Weeks 19–24): Compare diary + sample-weighing estimates against recall-only baselines, refine non-response/imputation weights with DES/ICAR-CIFRI, and deliver statewide rollout SOPs.`,
+    content: `Flugelsoft Labs follows a 4-stage iterative engineering and statistical co-design methodology with the Directorate of Fisheries, DES, and ICAR-CIFRI:
+1. Discovery & Statistical Design: Audit the updated pond/tank resource frame, define size/type/intensity strata, calibrate stratum variances using historical production and seed-distribution records, and finalize rotating panel rules targeting <3% district RSE. Key output: Approved Sampling Design & Data Dictionary.
+2. UX Wireframing & Offline MVP Build: Co-design Assamese/Bengali/Bodo/English harvest diary screens with Fishery Demonstrators; build offline-first PWA schedules, SMS fallback, and BLE/photo sample-weighing capture. Key output: Field-Ready Survey MVP.
+3. Contrasting 3-District Field Pilot: Deploy across Nagaon (high-production), Kamrup (medium-intensity), and Dima Hasao (hill district) covering ~850 sampled water bodies across two harvest quarters, running side-by-side recall vs. diary+weighing comparisons. Key output: Pilot Telemetry & Bias-Correction Dataset.
+4. Estimator Refinement & Audit Handover: Calibrate non-response/imputation weights with DES and ICAR-CIFRI statisticians, harden security/RBAC, and package reproducible estimation scripts and SOPs. Key output: Production-Ready System & Statewide Rollout Blueprint.`,
   },
   {
     id: 6,
-    title: '6. Innovation & differentiation',
+    title: '6. Development timeline & milestones',
     promptHint:
-      'Explain what is new or better than existing alternatives and why it works in North East India.',
-    content: `Existing fishery reporting in India relies either on census-style recall forms—which undercount partial harvests and self-consumption—or unverified eye-estimation. MatsyaSample Assam introduces four key innovations tailored to North East India:
-1. Estimation Over Compulsory Reporting: Respects the Directorate's principle that farmers should not be burdened with mandatory census reporting; only a scientifically selected rotating sample is surveyed intensively.
-2. Aquaculture Crop-Cutting Equivalent: Combines lightweight farmer harvest diaries with randomized enumerator sample weighings to measure and correct recall bias empirically.
-3. Explicit Uncertainty Quantification: Every district and State figure is published with a 95% confidence interval and Relative Standard Error (RSE%), replacing single-point guesses with statistical rigor.
-4. Reproducible & Auditable Snapshots: Unlike ad-hoc spreadsheets, every annual estimate locks the sampling frame version, stratum weights, and outlier rules in an auditable ledger ready for DES and ICAR-CIFRI review.`,
+      'Provide an indicative development timeline with phases, milestones, deliverables and dependencies, including when the solution will be ready for validation.',
+    content: `A 6-month (24-week) execution timeline delivers the validated system:
+- Month 1 (Weeks 1–4) — Frame Ingestion & Sampling Blueprint: Clean/ingest updated pond-tank frame; lock stratification schema and rotating panel allocation. Dependency: Directorate frame & historical yield records.
+- Month 2 (Weeks 5–8) — Offline Schedules, Diaries & Weighing MVP: Complete offline-first field schedules, multilingual farmer harvest diaries, and BLE/photo sample-weighing module. Deliverable: Alpha MVP ready for enumerator UAT.
+- Month 3 (Weeks 9–12) — Enumerator Training & Baseline Launch: Train district Fishery Demonstrators and complete baseline stocking schedules across ~850 sampled units in Nagaon (420), Kamrup (310), and Dima Hasao (120). Milestone: Solution ready for live field validation at Week 10.
+- Month 4 (Weeks 13–16) — Partial-Harvest Tracking & Spot Weighings: Continuous diary capture and randomized mid-season sample weighings across all three pilot districts.
+- Month 5 (Weeks 17–20) — Estimator Calibration & Recall-Bias Audit: Run Horvitz–Thompson 95% CI models, quantify recall vs. diary divergence, and conduct joint DES/ICAR-CIFRI statistical review.
+- Month 6 (Weeks 21–24) — Final Validation & Rollout Handover: Deliver pilot production report, locked open-audit codebase, and 35-district scaling SOPs.`,
   },
   {
     id: 7,
-    title: '7. Impact, scalability & deployment readiness',
+    title: '7. Data & information requirements',
     promptHint:
-      'Quantify expected outcomes, beneficiaries, scalability across Assam/NE and alignment with government workflows.',
-    content: `MatsyaSample Assam directly serves the Directorate of Fisheries, DES, and policy planners managing Assam's 4.75 lakh MT+ aquaculture sector, while reducing reporting burden on lakhs of fish farmers.
+      'Specify data/information needed for development and testing, formats, processing/annotation needs, dependencies and assumptions. Do not assume unconfirmed access.',
+    content: `Development and pilot validation require the following structured datasets—all treated as departmental inputs subject to formal sharing approval, without assuming unconfirmed access:
+- Updated Fishery-Resource Frame (CSV/GeoJSON/Shapefile): Unique water-body ID, district/block/village codes, water-spread area (ha), resource type (private pond, community tank, reclaimed tank), and geo-coordinates for stratification and frame-coverage checks.
+- Historical Production & Seed Records (CSV/XLSX): Block-level historical yield benchmarks and fish-seed/fingerling distribution logs to estimate prior stratum variances for Neyman/proportional sample allocation.
+- Scheme Beneficiary & Extension Lists (CSV): Voluntary contact details for sampled unit onboarding, strictly scoped to selected rotating panels.
+- Field Survey & Diary Telemetry (JSON/SQLite): Standardized baseline stocking schedules, timestamped partial-harvest entries (sold kg, self-consumption kg, farm-gate price), and enumerator spot-haul weighing records.
 
-Expected quantifiable outcomes from the pilot:
-- Reduce recall-induced under-reporting of partial harvests, self-consumption, and farm-gate sales by Greater Than 20% compared to end-of-year recall forms.
-- Achieve district-level production estimates with Relative Standard Error (RSE) ≤ 2.5% in major aquaculture districts and ≤ 3.5% in hill districts.
-- Cut annual state estimate compilation and audit turnaround from months to near real-time quarterly/annual releases.
-
-Because the system uses a rotating annual sample (replacing only a fraction of sampled ponds each year), it scales seamlessly from 3 pilot districts to all 35 districts of Assam and other North Eastern states without expanding field enumerator headcount.`,
+Processing needs include deduplicating multi-owner community tanks, assigning a single primary harvester per sampled unit, and flagging out-of-range yield-to-stocking ratios. Where frame lists lag newly excavated ponds, area-segment coverage adjustment factors will be applied.`,
   },
   {
     id: 8,
-    title: '8. Field validation, pilot plan & adoption strategy',
+    title: '8. Team, manpower & expertise',
     promptHint:
-      'Describe pilot sites, validation criteria, departmental support needed, and stakeholder onboarding.',
-    content: `In alignment with the NESFIC-D-32 pilot brief, Flugelsoft Labs proposes a 6-month field pilot across three contrasting districts:
-1. Nagaon (High-Production District): 420 sampled ponds/tanks across intensive and semi-intensive strata.
-2. Kamrup (Medium-Intensity District): 310 sampled private ponds and community tanks.
-3. Dima Hasao (Geographically Distinct Hill District): 120 sampled terrace/hill ponds and tanks.
+      'Identify roles, relevant domain/technical expertise and indicative manpower by development phase. Highlight critical specialist skills.',
+    content: `Flugelsoft Labs, led by Kalyanjit Hatibaruah (Lead Applicant & Principal Systems Architect), brings multidisciplinary engineering, statistical, and Assam field-deployment capability:
+- Lead Architect / Project Lead (1 FTE, Months 1–6): System architecture, government stakeholder alignment, and reproducible audit design.
+- Survey Statistician / Aquaculture Data Specialist (1 FTE, Months 1–6 — Critical Specialist): Stratified sampling design, rotating panel math, Horvitz–Thompson/FPC variance estimation, and DES/ICAR-CIFRI protocol alignment.
+- Offline-First PWA & Mobile Engineer (1.5 FTE, Months 1–5): IndexedDB/SQLite sync engine, multilingual Assamese/Bengali/Bodo UI, SMS fallback, and BLE scale integration.
+- Backend & PostGIS Data Engineer (1 FTE, Months 1–5): Frame ingestion pipelines, PostgreSQL/PostGIS schema, RBAC APIs, and SHA-256 snapshot locking.
+- QA, Field Training & Pilot Coordinator (1 FTE, Months 3–6): Enumerator training in Nagaon, Kamrup, and Dima Hasao, data-quality monitoring, and field verification.
 
-Departmental inputs required: access to the updated fishery-resource frame, historical production and fish-seed records, scheme beneficiary lists, and nomination of departmental field staff/enumerators in the 3 districts, alongside technical review checkpoints with DES and ICAR-CIFRI.
-
-Validation criteria: ≥90% diary completion among sampled units, ≥95% concordance between sample weighings and diary logs, and full reproducibility of district 95% confidence intervals by independent DES statisticians.`,
+Manpower peaks during Months 2–4 (5.5 FTE) for MVP build and 3-district pilot execution, tapering to 3 FTE in Months 5–6 for estimator calibration and handover.`,
   },
   {
     id: 9,
-    title: '9. Challenges, risks & mitigation',
+    title: '9. Testing, validation & evidence',
     promptHint:
-      'Identify operational, technical, adoption or regulatory risks and concrete mitigations.',
-    content: `Key risks and mitigations:
-1. Farmer Fatigue & Dropouts in Harvest Diaries: Mitigated by rotating sample panels (limiting burden to 1–2 years), ultra-short Assamese/local-language prompts, and enumerator phone/field check-ins.
-2. Incomplete or Outdated Resource Frame: Mitigated by incorporating frame-coverage adjustment factors and allowing enumerators to log newly excavated/reclaimed ponds in selected area segments.
-3. Low Connectivity in Remote Blocks (e.g., Dima Hasao, riverine chars): Mitigated by 100% offline-first PWA schedules and SMS fallback for partial-harvest logging.
-4. Double Counting of Inter-Pond Transfers or Multi-Owner Tanks: Mitigated by unique frame IDs, clear primary-harvester assignment, and automated duplicate-entry alerts when trader receipts overlap.`,
+      'Explain development testing, proposed performance/quality measures and evidence of progress. Include relevant prior research, pilots, deployments or product evidence.',
+    content: `Testing and validation span software reliability, statistical accuracy, and field usability:
+- Software & Sync Testing: Automated unit/integration tests for offline queue conflict resolution, BLE scale packet parsing, and deterministic anomaly rules; load testing for concurrent district synchronization.
+- Statistical Estimator Verification: Monte Carlo simulations on synthetic pond populations verifying unbiasedness of Horvitz–Thompson totals, exact 95% confidence interval coverage, and finite population correction math against R/SciPy reference implementations.
+- Proposed Pilot Quality Measures: (1) ≥90% harvest-diary completion across sampled units; (2) ≥95% weight concordance between randomized spot-haul weighings and diary logs; (3) District Relative Standard Error (RSE) ≤2.5% in major aquaculture districts and ≤3.5% in hill districts; and (4) >20% reduction in recall-induced under-reporting compared to year-end recall baselines.
+- Evidence of Progress: Flugelsoft Labs has already built and demonstrated the MatsyaSample Assam interactive prototype featuring live stratified sampling simulation, fault-injection testing (recall bias & double counting), and audit-ready CSV/PDF reporting. Formal field evidence will be generated during the 3-district contrasting pilot with DES and ICAR-CIFRI.`,
   },
   {
     id: 10,
-    title: '10. Timeline, deliverables & milestones (6 months)',
+    title: '10. Security, privacy, safety & compliance',
     promptHint:
-      'Provide a clear month-by-month or milestone schedule with concrete deliverables.',
-    content: `6-Month Execution Roadmap:
-- Month 1: Frame ingestion, stratification schema, and rotating sample design approved with Directorate of Fisheries & DES/ICAR-CIFRI.
-- Month 2: Offline-first digital field schedules, multilingual harvest diary app, and BLE sample-weighing module completed.
-- Month 3: Enumerator training and baseline stocking surveys completed across 850 sampled ponds/tanks in Nagaon, Kamrup, and Dima Hasao.
-- Month 4: Continuous partial-harvest diary tracking and mid-season randomized sample weighings across all 3 pilot districts.
-- Month 5: Statistical estimator validation, recall-bias comparison report, and 95% confidence-interval audit with DES & ICAR-CIFRI.
-- Month 6: Final pilot production report, reproducible open-audit codebase handover, and statewide rotating-survey rollout blueprint.`,
+      'Identify relevant security, privacy, safety, regulatory, interoperability, auditability and human-review requirements and how they will be addressed.',
+    content: `MatsyaSample Assam is designed for government-grade data governance, farmer privacy, and statistical auditability:
+- Privacy & Consent: Only sampled water bodies are surveyed; farmer phone numbers and GPS coordinates are encrypted at rest (AES-256) and in transit (TLS 1.3), with published outputs strictly aggregated to district/stratum totals so individual farmer incomes or harvests are never exposed.
+- Access Control & Safety: Role-based access control (RBAC) isolates Farmer, Enumerator, District Officer, and DES/ICAR-CIFRI Auditor permissions; offline device caches lock via PIN/biometric session timeouts.
+- Statistical Auditability & Human Review: Every annual/quarterly estimate generates an immutable SHA-256 snapshot locking the frame version, design weights, non-response adjustments, and outlier flags. No automated outlier exclusion occurs without human-in-the-loop review by a Fishery Statistical Officer.
+- Interoperability & Hosting: Open REST/CSV/GeoJSON schemas align with Directorate of Fisheries registers, DES reporting formats, and India-region cloud (NIC MeghRaj) data-residency norms under India's Digital Personal Data Protection (DPDP) Act.`,
   },
   {
     id: 11,
-    title: '11. Team & organizational capability',
+    title: '11. Innovation & differentiation',
     promptHint:
-      'Summarize applicant/entity credentials, technical capabilities and relevant experience.',
-    content: `Flugelsoft Labs is an Assam-based technology and data-systems engineering entity led by Kalyanjit Hatibaruah (Lead Applicant). Our team combines deep expertise in offline-first field data collection systems, geospatial resource frames, statistical estimation pipelines, and scalable government-grade web platforms.
+      'Explain the novel element, relevant existing alternatives/prior art and the basis of differentiation. Mention relevant IP and key open-source/proprietary dependencies.',
+    content: `Existing fishery data workflows in India rely on census-style annual recall forms, flat per-hectare yield multipliers, or ad-hoc spreadsheets—none of which capture staggered partial harvests or report statistical confidence intervals.
 
-For NESFIC-D-32, Flugelsoft Labs brings end-to-end capability across survey software engineering, mobile UX for rural field staff, reproducible Python/PostgreSQL statistical pipelines, and on-ground Assam deployment support—working closely with Directorate of Fisheries officers, DES statisticians, and ICAR-CIFRI domain experts.`,
+MatsyaSample Assam introduces four key differentiators:
+1. Rotating Stratified Sampling Over Compulsory Census: Respects the principle that farmers should not be burdened with mandatory reporting; only a scientifically rotating panel is surveyed intensively.
+2. Aquaculture Crop-Cutting Equivalent: Pairs ultra-lightweight multilingual harvest diaries with randomized enumerator spot-haul weighings to empirically measure and correct recall bias.
+3. Explicit Uncertainty Quantification: Replaces single-point guesses with Horvitz–Thompson totals, 95% confidence intervals, and RSE% per district.
+4. Reproducible Estimation Snapshots: Cryptographically locks frame versions, weights, and anomaly decisions for independent DES/ICAR-CIFRI audit.
+
+Built on open-source foundations (React, TypeScript, PostgreSQL/PostGIS, Python SciPy/Statsmodels) with zero vendor lock-in, Flugelsoft Labs retains IP over the Assam-calibrated rotating panel stratifier, recall-drift detection heuristics, and offline diary-weighing reconciliation engine.`,
   },
   {
     id: 12,
-    title: '12. Budget & grant utilization plan (₹40.00 Lakhs)',
+    title: '12. Resources, risks & pilot validation',
     promptHint:
-      'Summarize cost heads, justification and alignment with project milestones.',
-    content: `The proposed ₹40.00 Lakhs NESFIC grant is structured for maximum engineering and field-validation impact over 6 months:
-- Technical Engineering & Statistical Systems Team (₹20.00L / 50%): Lead Architect, Survey Statistician, Offline PWA & Backend Engineers building the frame stratifier, digital schedules, and CI estimator.
-- Field Verification & Sample Weighing Kits (₹6.00L / 15%): Rugged tablets and BLE digital scales for sample weighing in Nagaon, Kamrup, and Dima Hasao.
-- Aquaculture Sampling & DES/ICAR-CIFRI Alignment (₹4.00L / 10%): Statistical methodology validation and SOPs.
-- India-Region Cloud, Estimator Engine & Security (₹4.00L / 10%): Hosting, PostGIS infrastructure, and security testing.
-- 3-District Pilot, Enumerator Training & Travel (₹4.00L / 10%): On-ground onboarding and field verification.
-- Documentation & Contingency (₹2.00L / 5%): Audit handbooks and operational buffer.`,
+      'Provide indicative development/validation resource and cost drivers, key risks and mitigations. Briefly state how the developed solution would subsequently be pilot-validated in the stated context.',
+    content: `Indicative 6-month development and pilot cost drivers total ₹40.00 Lakhs: Technical Engineering & Statistical Systems (50% / ₹20.0L), Field Weighing & Rugged Tablet Kits (15% / ₹6.0L), Statistical Calibration & DES/ICAR-CIFRI Alignment (10% / ₹4.0L), India-Region Cloud & Security Audit (10% / ₹4.0L), 3-District Pilot & Enumerator Training (10% / ₹4.0L), and Documentation/Contingency (5% / ₹2.0L).
+
+Key risks and mitigations:
+- Farmer Diary Fatigue: Mitigated by 50% annual panel rotation, 3-tap Assamese/local-language prompts, and enumerator phone check-ins.
+- Outdated Resource Frame: Mitigated by area-segment coverage adjustments for newly excavated/reclaimed ponds.
+- Low Rural Connectivity: Mitigated by 100% offline-first PWA schedules and SMS harvest-log fallback.
+- Inter-Pond Double Counting: Mitigated by unique frame IDs and automated duplicate-entry alerts.
+
+Pilot Validation Plan: Following MVP completion, the system will be pilot-validated across ~850 sampled ponds/tanks in three contrasting districts—Nagaon (420, high-production), Kamrup (310, medium-intensity), and Dima Hasao (120, hill district)—benchmarking diary+weighing estimates against recall-only baselines and verifying 95% CI reproducibility with DES and ICAR-CIFRI.`,
   },
 ];
