@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rojes-assam-teatrace.pages.dev/sitemap.xml
+Sitemap: https://flugelsoft-matsyasample.pages.dev/sitemap.xml

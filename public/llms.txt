@@ -1,25 +1,26 @@
-# Rojes Labs — Assam TeaTrace (NESFIC-I-08)
+# Flugelsoft Labs — MatsyaSample Assam (NESFIC-D-32)
 
-> End-to-end digital traceability platform for the Assam tea value chain, developed for NESFIC 2026 Problem Statement NESFIC-I-08 (Tea Research Association – Tocklai).
+> Scientifically defensible, repeatable rotating sample survey, digital harvest diaries, sample weighing verification, and confidence-interval estimation for Assam pond and tank aquaculture (NESFIC-D-32, Fishery Department, Government of Assam).
 
 ## Lead Applicant & Organization
-- **Lead Applicant**: Pratibha Das Hatibaruah
-- **Submitting Entity**: Rojes Labs
+- **Lead Applicant**: Kalyanjit Hatibaruah
+- **Lead Entity**: Flugelsoft Labs
 - **Region**: Assam, India (IN-AS)
-- **Challenge**: North East Seva First Innovation Challenge (NESFIC) 2026 — NESFIC-I-08
-- **Live URL**: https://rojes-assam-teatrace.pages.dev/
-- **GitHub Repository**: https://github.com/Pratibhadas3108/rojes-assam-teatrace
+- **Challenge**: North East Seva First Innovation Challenge (NESFIC) 2026 — NESFIC-D-32
+- **Challenge Owner**: Fishery Department • Government of Assam / Directorate of Fisheries
+- **Live URL**: https://flugelsoft-matsyasample.pages.dev/
+- **GitHub Repository**: https://github.com/flugelsoft-01/nesfic-d32-pond-tank-survey
 
 ## Key Routes (SEO & GEO Friendly)
-- `/` or `/assam-tea-value-chain-ledger` — Assam Tea Value Chain Traceability Ledger & Digital Product Passport Explorer (https://rojes-assam-teatrace.pages.dev/)
-- `/trace-simulator` or `/assam-tea-batch-qr-simulator` — Interactive Farm-to-Cup Batch & QR Provenance Simulator (https://rojes-assam-teatrace.pages.dev/trace-simulator)
-- `/compliance-audit` or `/assam-tea-gi-mrl-compliance-audit` — Assam GI Origin, Mass-Balance & MRL Export Compliance Audit (https://rojes-assam-teatrace.pages.dev/compliance-audit)
-- `/proposal` or `/nesfic-i08-tea-traceability-proposal` — Complete 12-Section NESFIC-I-08 Proposal & Downloadable PDFs (https://rojes-assam-teatrace.pages.dev/proposal)
-- `/tutorial` or `/assam-tea-traceability-tutorial` — Comprehensive Tutorial & Guide on what the application does and how to use it (https://rojes-assam-teatrace.pages.dev/tutorial)
+- `/` or `/assam-pond-tank-sample-survey-ledger` — Rotating Sample Frame & Pond/Tank Survey Ledger (https://flugelsoft-matsyasample.pages.dev/)
+- `/survey-simulator` or `/stratified-sampling-confidence-interval-simulator` — Interactive Stratified Sampling & Confidence Interval Simulator (https://flugelsoft-matsyasample.pages.dev/survey-simulator)
+- `/district-estimates` or `/assam-aquaculture-production-estimates-audit` — District & State Production Estimates with 95% Confidence Intervals & Audit Export (https://flugelsoft-matsyasample.pages.dev/district-estimates)
+- `/proposal` or `/nesfic-d32-aquaculture-survey-proposal` — Complete 12-Section NESFIC-D-32 Proposal & Downloadable PDFs (https://flugelsoft-matsyasample.pages.dev/proposal)
+- `/tutorial` or `/matsyasample-assam-tutorial` — Comprehensive Tutorial & Guide on statistical sampling, harvest diaries, and confidence intervals (https://flugelsoft-matsyasample.pages.dev/tutorial)
 
-## Target Geographical Indication (GI) Districts (Assam, India)
-- **Jorhat (26.7509° N, 94.2037° E):** TRA Tocklai R&D Center, Heritage Clonal Plantations
-- **Dibrugarh (27.4728° N, 94.9120° E):** Upper Assam Quality Orthodox & CTC Gardens
-- **Tinsukia (27.4922° N, 95.3468° E):** Small Tea Grower (STG) Clusters & Bought-Leaf Factories (BLFs)
-- **Golaghat (26.5167° N, 93.9667° E):** South Bank Brahmaputra Tea Estates
-- **Sonitpur (26.6528° N, 92.7926° E):** North Bank High-Altitude Specialty Teas
+## Indicative Pilot & Statewide Districts (Assam, India)
+- **Nagaon (26.3480° N, 92.6838° E):** High-production freshwater pond and tank aquaculture district
+- **Kamrup (26.1445° N, 91.7362° E):** Medium-intensity peri-urban & rural pond aquaculture district
+- **Dima Hasao (25.1667° N, 93.0167° E):** Geographically distinct hill-district tank & pond cluster
+- **Cachar (24.8333° N, 92.7789° E):** Barak Valley floodplain pond & tank cluster
+- **Barpeta (26.3229° N, 91.0063° E):** Lower Assam high-density rural aquaculture belt

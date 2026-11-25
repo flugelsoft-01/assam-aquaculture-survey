@@ -14,52 +14,52 @@ export interface BudgetItem {
 
 export const BUDGET_ALLOCATION: BudgetItem[] = [
   {
-    head: 'Technical Engineering Team Cost',
-    scope: 'Lead Architect, Full-Stack/Offline PWA, Ledger/Data & Embedded Engineers (6 months)',
+    head: 'Technical Engineering & Statistical Systems Team',
+    scope: 'Lead Architect, Survey Statistician, Offline PWA & Backend Engineers (6 months)',
     amountLakhs: 20.0,
     sharePct: 50.0,
   },
   {
-    head: 'Field Hardware & Edge Pilot Kits',
-    scope: 'BLE/RS-232 weighbridge adapters, rugged tablets, thermal QR printers & tags (2 sites)',
+    head: 'Field Verification & Sample Weighing Kits',
+    scope: 'Rugged field tablets, BLE digital hanging/platform scales & solar power banks (3 pilot districts)',
     amountLakhs: 6.0,
     sharePct: 15.0,
   },
   {
-    head: 'Tea Quality, GI & Compliance Advisory',
-    scope: 'TRA/NABL MRL & STG-BLF domain specialist advisory and audit protocol alignment',
+    head: 'Aquaculture Sampling & DES/ICAR-CIFRI Alignment',
+    scope: 'Stratification design validation, harvest diary protocols & statistical audit methodology',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: 'India-Region Cloud, Ledger & Security Audit',
-    scope: 'Managed PostgreSQL, API hosting, KMS encryption, and penetration/tamper testing',
+    head: 'India-Region Cloud, Estimator Engine & Security',
+    scope: 'Managed PostgreSQL/PostGIS, reproducible R/Python estimator API, KMS & security audit',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: 'Assam Shadow Pilot, Travel & Training',
-    scope: 'Jorhat/Dibrugarh STG & BLF onboarding, bilingual operator training & field validation',
+    head: '3-District Assam Pilot, Enumerator Training & Travel',
+    scope: 'Nagaon, Kamrup & Dima Hasao field onboarding, bilingual training & sample weighing trials',
     amountLakhs: 4.0,
     sharePct: 10.0,
   },
   {
-    head: 'IP Filing, GS1 Standards & Contingency',
-    scope: 'GS1 Digital Link registration, mass-balance IP filing & operational buffer',
+    head: 'Documentation, Open Standards & Contingency',
+    scope: 'Auditable methodology handbook, SOPs for Fishery staff & operational buffer',
     amountLakhs: 2.0,
     sharePct: 5.0,
   },
 ];
 
 export const PROPOSAL_METADATA = {
-  challengeId: 'NESFIC-I-08',
-  challengeTitle: 'End-to-End Digital Traceability of Tea Across the Assam Tea Value Chain',
-  sponsor: 'Tea Research Association (TRA) – Tocklai',
-  organization: 'Rojes Labs',
-  leadApplicant: 'Pratibha Das Hatibaruah',
-  demoVideoUrl: 'https://rojes-assam-teatrace.pages.dev/demo',
-  productUrl: 'https://rojes-assam-teatrace.pages.dev/',
-  githubUrl: 'https://github.com/Pratibhadas3108/rojes-assam-teatrace',
+  challengeId: 'NESFIC-D-32',
+  challengeTitle: 'Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation',
+  sponsor: 'Fishery Department • Government of Assam / Directorate of Fisheries',
+  organization: 'Flugelsoft Labs',
+  leadApplicant: 'Kalyanjit Hatibaruah',
+  demoVideoUrl: 'https://flugelsoft-matsyasample.pages.dev/demo',
+  productUrl: 'https://flugelsoft-matsyasample.pages.dev/',
+  githubUrl: 'https://github.com/flugelsoft-01/nesfic-d32-pond-tank-survey',
 };
 
 export const PROPOSAL_SECTIONS: ProposalSection[] = [
@@ -68,163 +68,145 @@ export const PROPOSAL_SECTIONS: ProposalSection[] = [
     title: '1. Problem understanding & user workflow',
     promptHint:
       'Explain the problem, users/beneficiaries and current workflow. Identify the specific gap(s) addressed and the intended outcome.',
-    content: `Assam produces over half of India's tea, yet its value chain—spanning 1.2 lakh+ Small Tea Growers (STGs), Bought-Leaf Factories (BLFs), heritage estates, auction centres, blenders, and exporters—still relies on fragmented paper challans, disconnected weighbridge logs, and manual estate ledgers. Once green leaf leaves an STG collection centre and enters a BLF or multi-estate blending line, lot identity is lost.
+    content: `Assam reported approximately 4.75 lakh MT of fish production in 2023–24, with a major share originating from dispersed private ponds and community tanks where harvesting is partial and spread across the year. Attempting annual complete enumeration across lakhs of water bodies is operationally impractical and statistically fragile.
 
-Key users and beneficiaries include STGs and Leaf Agents, BLF and Estate Factory Managers, QA/MRL Compliance Officers, Tea Board & Auction Brokers, and domestic/export buyers. Currently, green leaf is weighed manually at collection sheds, transported in mixed lots, processed through withering, rolling, fermentation, drying, and sorting, and packed into chests or bags with static stenciled codes. Compliance checks (FSSAI, EU-MRL, and Assam GI origin) are reconstructed retrospectively from paper registers.
+Key users and stakeholders include fish farmers, Directorate of Fisheries field and statistical staff, Directorate of Economics & Statistics (DES), ICAR-CIFRI technical collaborators, and policy planners. Currently, estimation relies heavily on annual farmer recall and uniform productivity assumptions per hectare.
 
-This creates three critical gaps: (1) Loss of farm-to-chest provenance when STG lots are aggregated or blended; (2) Inability to detect illicit leaf substitution or adulteration via green-leaf-to-made-tea mass-balance anomalies; and (3) High export rejection risk when a single non-compliant lot contaminates an entire blended consignment. The intended outcome of Assam TeaTrace is a tamper-evident, offline-capable digital chain of custody that preserves lot lineage from plucking to retail QR scan, protects the Assam GI brand, and cuts compliance audit time from days to seconds.`,
+This creates four critical gaps: (1) Weak farmer recall across multiple partial harvests; (2) Missed harvests or double counting when fish are sold in staggered lots; (3) Unrecorded self-consumption and direct farm-gate sales; and (4) Uniform yield assumptions that fail to capture differences in stocking density, species mix, feeding, and management, with no explicit measure of statistical uncertainty. The intended outcome of MatsyaSample Assam is a scientifically defensible, repeatable rotating sample survey system—not compulsory reporting by every farmer—that produces transparent district and State production estimates with explicit confidence intervals.`,
   },
   {
     id: 2,
     title: '2. Proposed solution & key features',
     promptHint:
       'Describe the solution, main modules/functions, user interaction and what changes versus the current approach.',
-    content: `Rojes Labs proposes Assam TeaTrace, an end-to-end digital traceability platform built specifically for Assam's multi-tier tea ecosystem. Unlike paper logs or isolated ERP silos, Assam TeaTrace assigns a cryptographically linked Digital Product Passport (DPP) to every green-leaf lot and preserves its lineage through aggregation, processing, blending, auctioning, and retail packaging.
+    content: `Flugelsoft Labs proposes MatsyaSample Assam, a digitally supported statistical sampling and estimation platform purpose-built for Assam's pond and tank aquaculture ecosystem.
 
 Core modules include:
-1. STG & Estate Intake App (Offline-First): Captures GPS-tagged plucking origin, grower ID, tea variety/flush, and digital weighbridge weight via Bluetooth/USB scale integration or QR-coded leaf bags, syncing automatically when 4G returns.
-2. Factory Processing & Mass-Balance Engine: Tracks lot transitions across withering, CTC/Orthodox rolling, fermentation, drying, and grading. It continuously enforces physical mass-balance rules (flagging if made-tea output exceeds the expected 21%–25% recovery ratio from verified green leaf).
-3. Blending & Split-Lot Lineage Graph: Models many-to-one blending and one-to-many chest/pouch splits using a Directed Acyclic Graph (DAG) anchored by SHA-256 hash chaining.
-4. MRL & GI Compliance Vault: Links NABL/TRA Tocklai pesticide residue certificates and Assam GI origin proofs directly to batch passports, automatically quarantining lots on MRL exceedance.
-5. Consumer & Buyer QR Passport: Any chest, auction sample, or retail pack carries a GS1 Digital Link QR code revealing verified garden origin, plucking date, processing method, and lab clearance.`,
+1. Rotating Fishery-Resource Frame & Stratifier: Ingests the updated fishery-resource frame and stratifies ponds/tanks by water-spread size (Smaller than 0.2 ha, 0.2–1.0 ha, Greater Than 1.0 ha), resource type (private pond, community tank, reclaimed tank), and culture intensity (extensive, semi-intensive, intensive), drawing random rotating panels (e.g., 50% annual rotation) to avoid respondent fatigue.
+2. Digital Field Schedules (Offline-First): Replaces paper registers with structured mobile schedules for sampled farms capturing baseline stocking, species, feed, and management practices.
+3. Partial-Harvest & Farm-Gate Diaries: Lightweight mobile/SMS harvest diaries for sampled farmers and enumerators to log staggered harvests, household self-consumption, and direct farm-gate sales in near real time.
+4. Sample Weighing & Field Verification: Supports spot-haul weighing via Bluetooth digital scales or geo-tagged photo verification for selected observations—acting as an aquaculture equivalent of crop-cutting experiments.
+5. Reproducible Confidence-Interval Estimator: Computes district and State totals using stratified Horvitz–Thompson estimators, outputting 95% confidence intervals, Relative Standard Error (RSE%), and locked methodology snapshots for full auditability.`,
   },
   {
     id: 3,
     title: '3. Describe User Journey, Wireframes, Prototype & Proof of Work',
     promptHint:
       'Describe the proposed user journey/workflow and provide supporting artifacts such as wireframes, mock-ups, prototypes, MVPs, simulation/model outputs, test results, or evidence from prior pilots/deployments.',
-    content: `The user journey spans four connected personas:
-- STG / Field Clerk: Logs green-leaf weight at the collection shed, scans the grower's QR card, and mints an origin lot ID offline.
-- BLF / Estate Factory Manager: Scans incoming leaf bags at the factory gate, advances the lot through withering, rolling, drying, and grading, and monitors live outturn recovery on the Value Chain Ledger.
-- QA / Export Auditor: Uploads or syncs MRL test results, reviews district-level GI and mass-balance alerts, and exports audit-ready CSV/JSON dossiers.
-- Buyer / Regulator: Scans the chest or retail QR code to inspect the immutable farm-to-cup timeline.
+    content: `The workflow connects four user roles:
+- Fishery Statistical Officer: Configures stratification rules over the updated resource frame, draws random rotating samples, and monitors district RSE% and diary compliance.
+- Field Enumerator: Conducts baseline schedules on sampled ponds/tanks offline, performs scheduled sample weighings, and reconciles discrepancies.
+- Sampled Fish Farmer: Logs partial harvests, self-consumption, and farm-gate sales via simple Assamese/Bengali/Bodo/English harvest diary prompts.
+- DES / ICAR-CIFRI Reviewer: Audits locked estimation runs, sampling weights, assumptions, and 95% confidence intervals.
 
-As Proof of Work, Rojes Labs has built a live, interactive web application prototype (Assam TeaTrace) featuring: (a) a Value Chain Traceability Ledger displaying multi-district Assam tea batches across Jorhat, Dibrugarh, Tinsukia, Golaghat, and Sonitpur with full 5-stage SHA-256 hash chains; (b) an interactive Batch & QR Provenance Simulator that models green-leaf-to-made-tea outturn ratios, mints a live QR Digital Product Passport, and demonstrates automated anomaly detection when unauthorized leaf mixing (outturn Greater Than 25%) or MRL exceedance is injected; and (c) a GI & MRL Compliance Audit dashboard with exportable reports. Full architecture diagrams, simulation outputs, and UI evidence are packaged in the accompanying Proof of Work PDF.`,
+As Proof of Work, Flugelsoft Labs has built an interactive web prototype (MatsyaSample Assam) featuring: (a) a Rotating Sample Frame & Survey Ledger across Nagaon, Kamrup, Dima Hasao, Cachar, and Barpeta showing 5-stage verification timelines; (b) an Interactive Stratified Sampling & CI Simulator that models sample size, partial-harvest frequency, and injects recall-bias or double-counting faults to demonstrate how diaries and sample weighing tighten 95% confidence intervals; and (c) a District & State Estimates Audit dashboard with exportable CSV dossiers. Full architecture diagrams and simulation outputs are included in the Proof of Work PDF.`,
   },
   {
     id: 4,
     title: '4. Technology & solution architecture',
     promptHint:
       'Describe stack and architecture: software/hardware, AI/ML models or algorithms, methods/rules, APIs/integrations, data flow and hosting.',
-    content: `Assam TeaTrace uses a hybrid edge-cloud architecture engineered for low-connectivity tea belts:
-- Edge & Field Layer: Progressive Web App (PWA) and Android client with IndexedDB/SQLite offline queuing, BLE/RS-232 weighbridge adapters, and thermal QR/RFID label printers for leaf bags and tea chests.
-- Core Traceability & Ledger Layer: TypeScript/Node.js and Python FastAPI microservices backed by PostgreSQL (relational lot metadata and GS1 EPCIS 2.0 event schemas) plus an append-only SHA-256 Merkle/hash-chain ledger anchored to a permissioned Hyperledger Fabric / EVM-compatible audit layer for tamper-evident custody proofs.
-- Intelligence & Rules Engine: Deterministic mass-balance reconciliation (enforcing moisture-adjusted green-leaf-to-made-tea conversion bounds of 21%–25%) paired with an Isolation Forest anomaly detector to flag unusual yield spikes, transit time gaps, or off-region GPS coordinates.
-- APIs & Integrations: REST/Webhook connectors for existing estate ERPs, NABL/TRA Tocklai LIMS lab reports, Tea Board of India auction/e-marketplace formats, and GS1 Digital Link QR resolvers.
-- Hosting: Containerized deployment on India-region cloud (AWS Mumbai / NIC MeghRaj compatible) with TLS 1.3 encryption, automated daily backups, and role-based access control.`,
+    content: `MatsyaSample Assam uses an offline-first edge-cloud statistical architecture designed for rural Assam connectivity:
+- Edge & Field Layer: Progressive Web App (PWA) and Android client with IndexedDB/SQLite local persistence, GPS polygon/point capture, and optional Bluetooth (BLE) digital hanging-scale integration for sample weighing.
+- Core Survey & Frame Layer: TypeScript/Node.js API gateway and PostgreSQL/PostGIS database storing the versioned fishery-resource frame, stratum definitions, rotating panel assignments, and immutable field schedules.
+- Statistical Estimation Engine: Python (SciPy/Statsmodels) microservice implementing stratified random sampling, Neyman/proportional allocation, finite population correction (FPC), Horvitz–Thompson weighted totals, and variance/95% CI calculation. Every estimation run stores a SHA-256 hash of input data, weights, and parameters for exact reproducibility.
+- Anomaly & Quality Rules: Deterministic checks flag recall-drift (diary vs. stocking/feed plausibility), suspected duplicate harvest entries, and missed partial-harvest intervals for enumerator follow-up.
+- Hosting & Security: Containerized deployment on India-region cloud (NIC MeghRaj / AWS Mumbai compatible) with TLS 1.3, role-based access control, and automated encrypted backups.`,
   },
   {
     id: 5,
     title: '5. Development methodology & intermediate steps',
     promptHint:
       'Show the sequence from discovery/requirements through design, prototype, MVP, testing and refinement, with key outputs.',
-    content: `Rojes Labs follows an iterative, field-co-designed Agile methodology structured in five sequential stages:
-1. Discovery & Value-Chain Mapping: Conduct stakeholder interviews with TRA Tocklai, STG cooperatives, and BLFs in Upper and Central Assam to map exact weighbridge formats, leaf aggregation practices, and export documentation workflows. Output: EPCIS 2.0 tea event taxonomy and functional specification.
-2. UX Wireframing & Data Modeling: Design bilingual (Assamese/English) mobile-first intake screens, QR chest-labeling workflows, and the DAG lot-splitting/blending data model. Output: Clickable wireframes and cryptographic schema.
-3. Interactive Prototype & Simulation (Completed): Build the React/TypeScript Value Chain Ledger, Batch & QR Simulator, and Mass-Balance Anomaly Engine to validate end-to-end UX and hash-chain verification logic. Output: Live web MVP and Proof of Work PDF.
-4. Field-Ready MVP & Hardware Integration: Implement offline-first mobile sync, RS-232/BLE weighbridge drivers, NABL LIMS PDF/API ingestion, and permissioned ledger anchoring. Output: Pilot-ready v1.0 release.
-5. Shadow Pilot & Refinement: Run parallel digital + paper tracking at partner STG sheds and BLFs during active plucking rounds, refining UI ergonomics, label durability, and anomaly thresholds based on operator feedback.`,
+    content: `We follow an iterative 4-phase delivery methodology co-designed with the Directorate of Fisheries, DES, and ICAR-CIFRI:
+- Phase 1 — Frame Audit & Statistical Design (Weeks 1–4): Clean and stratify the updated Assam pond/tank resource frame; calibrate stratum variances using historical production and fish-seed records; finalize rotating panel rules and sample size targets for Smaller than 3% district RSE.
+- Phase 2 — Digital Schedules, Diaries & Weighing MVP (Weeks 5–10): Build offline-first enumerator schedules, multilingual farmer harvest diaries, and BLE/photo sample weighing modules; validate usability with Fishery Demonstrators.
+- Phase 3 — 3-District Contrasting Pilot (Weeks 11–18): Deploy in Nagaon (high-production), Kamrup (medium-intensity), and Dima Hasao (geographically distinct hill district) covering ~850 sampled water bodies across two harvest quarters.
+- Phase 4 — Estimator Calibration & Audit Handover (Weeks 19–24): Compare diary + sample-weighing estimates against recall-only baselines, refine non-response/imputation weights with DES/ICAR-CIFRI, and deliver statewide rollout SOPs.`,
   },
   {
     id: 6,
-    title: '6. Development timeline & milestones',
+    title: '6. Innovation & differentiation',
     promptHint:
-      'Provide an indicative development timeline with phases, milestones, deliverables and dependencies, including when the solution will be ready for validation.',
-    content: `We propose a structured 24-week (6-month) execution plan from project kickoff to field validation:
-- Weeks 1–4 (Phase 1 — Field Discovery & Schema Finalization): On-site workflow mapping with TRA Tocklai and 2–3 partner BLFs/estates; finalize GS1 EPCIS tea event schema and mass-balance rules. Deliverable: Signed requirements & data specification.
-- Weeks 5–10 (Phase 2 — Core Ledger, APIs & Offline Mobile App): Build FastAPI/PostgreSQL backend, SHA-256 Merkle audit service, and offline-first STG/BLF Android PWA with weighbridge adapter. Deliverable: Alpha build ready for bench testing.
-- Weeks 11–16 (Phase 3 — Blending DAG, MRL Vault & QR Passports): Implement split/blend lineage graph, NABL/TRA LIMS report parser, automated quarantine triggers, and GS1 Digital Link QR generator. Deliverable: Integrated Beta MVP.
-- Weeks 17–20 (Phase 4 — Bench Stress Testing & Security Audit): Simulate 50,000+ lot events, offline conflict resolution, and penetration/tamper testing. Solution is ready for formal validation by Week 20.
-- Weeks 21–24 (Phase 5 — Shadow Field Pilot & Final Report): Live parallel run across 1 heritage estate and 1 BLF-STG cluster in Assam; publish validation metrics and scale-up roadmap. Dependency: Timely access to partner factory weighbridges and sample MRL certificates.`,
+      'Explain what is new or better than existing alternatives and why it works in North East India.',
+    content: `Existing fishery reporting in India relies either on census-style recall forms—which undercount partial harvests and self-consumption—or unverified eye-estimation. MatsyaSample Assam introduces four key innovations tailored to North East India:
+1. Estimation Over Compulsory Reporting: Respects the Directorate's principle that farmers should not be burdened with mandatory census reporting; only a scientifically selected rotating sample is surveyed intensively.
+2. Aquaculture Crop-Cutting Equivalent: Combines lightweight farmer harvest diaries with randomized enumerator sample weighings to measure and correct recall bias empirically.
+3. Explicit Uncertainty Quantification: Every district and State figure is published with a 95% confidence interval and Relative Standard Error (RSE%), replacing single-point guesses with statistical rigor.
+4. Reproducible & Auditable Snapshots: Unlike ad-hoc spreadsheets, every annual estimate locks the sampling frame version, stratum weights, and outlier rules in an auditable ledger ready for DES and ICAR-CIFRI review.`,
   },
   {
     id: 7,
-    title: '7. Data & information requirements',
+    title: '7. Impact, scalability & deployment readiness',
     promptHint:
-      'Specify data/information needed for development and testing, formats, processing/annotation needs, dependencies and assumptions. Do not assume unconfirmed access.',
-    content: `Development and validation require structured operational and compliance datasets, without assuming unconfirmed proprietary access:
-- Grower & Estate Master Data: Anonymized STG IDs, garden/section geo-polygons (GeoJSON/KML), tea cultivar/clone type, and Assam GI registration metadata.
-- Intake & Processing Logs: Green-leaf weighbridge tickets (CSV/JSON or RS-232 serial stream), plucking date/flush, factory line IDs, withering/drying batch timestamps, and made-tea grade weights (kg).
-- Blending & Packaging Records: Chest/lot blend ratios, auction catalogue lot numbers, and GS1 GTIN/serial identifiers.
-- Quality & MRL Lab Data: Pesticide residue test reports (PDF/JSON) from TRA Tocklai or NABL-accredited laboratories mapped against FSSAI and EU-MRL thresholds.
+      'Quantify expected outcomes, beneficiaries, scalability across Assam/NE and alignment with government workflows.',
+    content: `MatsyaSample Assam directly serves the Directorate of Fisheries, DES, and policy planners managing Assam's 4.75 lakh MT+ aquaculture sector, while reducing reporting burden on lakhs of fish farmers.
 
-For initial development and testing, Rojes Labs uses synthetic and bench-calibrated Assam tea datasets modeling realistic 21%–25% outturn ratios and simulated anomalies. During pilot validation, partner estates and BLFs will provide consented, anonymized batch exports or parallel shadow-entry logs. No unconfirmed access to Tea Board of India internal databases or private auction ERPs is assumed; standard CSV/API import bridges are used instead.`,
+Expected quantifiable outcomes from the pilot:
+- Reduce recall-induced under-reporting of partial harvests, self-consumption, and farm-gate sales by Greater Than 20% compared to end-of-year recall forms.
+- Achieve district-level production estimates with Relative Standard Error (RSE) ≤ 2.5% in major aquaculture districts and ≤ 3.5% in hill districts.
+- Cut annual state estimate compilation and audit turnaround from months to near real-time quarterly/annual releases.
+
+Because the system uses a rotating annual sample (replacing only a fraction of sampled ponds each year), it scales seamlessly from 3 pilot districts to all 35 districts of Assam and other North Eastern states without expanding field enumerator headcount.`,
   },
   {
     id: 8,
-    title: '8. Team, manpower & expertise',
+    title: '8. Field validation, pilot plan & adoption strategy',
     promptHint:
-      'Identify roles, relevant domain/technical expertise and indicative manpower by development phase. Highlight critical specialist skills.',
-    content: `Led by Pratibha Das Hatibaruah (Lead Applicant & Systems Architect), Rojes Labs combines regional Assam tea-sector familiarity with full-stack, IoT, and cryptographic engineering:
-- Lead Applicant / Systems Architect (1 FTE, All Phases): Pratibha Das Hatibaruah — oversees architecture, TRA Tocklai alignment, stakeholder coordination, and pilot execution.
-- Full-Stack & Offline-First Mobile Engineer (1 FTE, Phases 2–5): Develops the React/PWA intake app, IndexedDB sync engine, and GS1 QR Digital Passport portal.
-- Backend, Ledger & Data Engineer (1 FTE, Phases 2–5): Builds PostgreSQL/EPCIS microservices, SHA-256 Merkle anchoring, and the mass-balance anomaly detection pipeline.
-- Embedded / Weighbridge Integration Specialist (0.5 FTE, Phases 2–4): Handles BLE/RS-232 scale interfacing and rugged thermal QR label printing for damp factory environments.
-- Tea Quality & Compliance Advisor (Part-Time Consultant, Phases 1, 4 & 5): Domain specialist guiding TRA Tocklai processing norms, STG/BLF workflows, FSSAI/EU-MRL rules, and Assam GI verification.
+      'Describe pilot sites, validation criteria, departmental support needed, and stakeholder onboarding.',
+    content: `In alignment with the NESFIC-D-32 pilot brief, Flugelsoft Labs proposes a 6-month field pilot across three contrasting districts:
+1. Nagaon (High-Production District): 420 sampled ponds/tanks across intensive and semi-intensive strata.
+2. Kamrup (Medium-Intensity District): 310 sampled private ponds and community tanks.
+3. Dima Hasao (Geographically Distinct Hill District): 120 sampled terrace/hill ponds and tanks.
 
-Critical specialist skills include offline conflict-free data synchronization in low-bandwidth rural Assam, physical tea mass-balance modeling, and GS1 EPCIS 2.0 supply-chain standards.`,
+Departmental inputs required: access to the updated fishery-resource frame, historical production and fish-seed records, scheme beneficiary lists, and nomination of departmental field staff/enumerators in the 3 districts, alongside technical review checkpoints with DES and ICAR-CIFRI.
+
+Validation criteria: ≥90% diary completion among sampled units, ≥95% concordance between sample weighings and diary logs, and full reproducibility of district 95% confidence intervals by independent DES statisticians.`,
   },
   {
     id: 9,
-    title: '9. Testing, validation & evidence',
+    title: '9. Challenges, risks & mitigation',
     promptHint:
-      'Explain development testing, proposed performance/quality measures and evidence of progress. Include relevant prior research, pilots, deployments or product evidence.',
-    content: `Testing and validation span three rigorous tiers:
-1. Unit & Cryptographic Integrity Testing: Automated verification of SHA-256 hash-chain continuity across lot splits and blends, ensuring any retrospective weight or origin edit invalidates the downstream Merkle root.
-2. Mass-Balance & Anomaly Simulation: Bench testing across 1,000+ simulated STG-to-BLF batch scenarios verifying 100% detection of synthetic outturn spikes (Greater Than 25% recovery), missing custody stages, and MRL exceedance holds.
-3. Offline Sync & Field Usability Testing: Simulating 72-hour network blackouts with queued weighbridge events to confirm zero data loss upon reconnection.
-
-Key performance measures (KPIs):
-- End-to-end lot reconciliation accuracy: Greater Than or equal to 99.5% mass-balance accountability.
-- Anomaly detection latency: Smaller than 2 seconds from factory bagging entry.
-- Offline intake capture time: Smaller than 15 seconds per STG leaf lot.
-- Audit dossier generation: Smaller than 5 seconds for export-ready MRL + GI provenance packs.
-
-Evidence of progress is demonstrated in the live Rojes Labs Assam TeaTrace prototype (Value Chain Ledger, Batch & QR Simulator, and GI/MRL Audit modules) and the accompanying Proof of Work PDF containing simulation charts and schema verification outputs.`,
+      'Identify operational, technical, adoption or regulatory risks and concrete mitigations.',
+    content: `Key risks and mitigations:
+1. Farmer Fatigue & Dropouts in Harvest Diaries: Mitigated by rotating sample panels (limiting burden to 1–2 years), ultra-short Assamese/local-language prompts, and enumerator phone/field check-ins.
+2. Incomplete or Outdated Resource Frame: Mitigated by incorporating frame-coverage adjustment factors and allowing enumerators to log newly excavated/reclaimed ponds in selected area segments.
+3. Low Connectivity in Remote Blocks (e.g., Dima Hasao, riverine chars): Mitigated by 100% offline-first PWA schedules and SMS fallback for partial-harvest logging.
+4. Double Counting of Inter-Pond Transfers or Multi-Owner Tanks: Mitigated by unique frame IDs, clear primary-harvester assignment, and automated duplicate-entry alerts when trader receipts overlap.`,
   },
   {
     id: 10,
-    title: '10. Security, privacy, safety & compliance',
+    title: '10. Timeline, deliverables & milestones (6 months)',
     promptHint:
-      'Identify relevant security, privacy, safety, regulatory, interoperability, auditability and human-review requirements and how they will be addressed.',
-    content: `Assam TeaTrace embeds security, privacy, and regulatory compliance by design:
-- Data Privacy & Commercial Confidentiality: STG farmer PII and proprietary estate pricing/blend recipes are encrypted at rest (AES-256) and in transit (TLS 1.3). Public retail QR scans expose only provenance, grade, GI status, and MRL clearance—never commercial prices or farmer phone numbers.
-- Access Control & Auditability: Strict Role-Based Access Control (RBAC) separates STG Clerks, BLF Managers, Lab Officers, and Auditors. Every create/update/quarantine action is signed and recorded in an immutable audit log.
-- Regulatory & Standards Alignment: Aligned with FSSAI food safety traceability, Tea Board of India GI protection norms, EU Maximum Residue Limit (MRL) export documentation, and GS1 EPCIS 2.0 / Digital Link interoperability standards.
-- Human-in-the-Loop Governance: Automated mass-balance or MRL alerts place lots in a soft or hard quarantine state, requiring explicit sign-off and documented justification from an authorized QA Officer before release or rejection.`,
+      'Provide a clear month-by-month or milestone schedule with concrete deliverables.',
+    content: `6-Month Execution Roadmap:
+- Month 1: Frame ingestion, stratification schema, and rotating sample design approved with Directorate of Fisheries & DES/ICAR-CIFRI.
+- Month 2: Offline-first digital field schedules, multilingual harvest diary app, and BLE sample-weighing module completed.
+- Month 3: Enumerator training and baseline stocking surveys completed across 850 sampled ponds/tanks in Nagaon, Kamrup, and Dima Hasao.
+- Month 4: Continuous partial-harvest diary tracking and mid-season randomized sample weighings across all 3 pilot districts.
+- Month 5: Statistical estimator validation, recall-bias comparison report, and 95% confidence-interval audit with DES & ICAR-CIFRI.
+- Month 6: Final pilot production report, reproducible open-audit codebase handover, and statewide rotating-survey rollout blueprint.`,
   },
   {
     id: 11,
-    title: '11. Innovation & differentiation',
+    title: '11. Team & organizational capability',
     promptHint:
-      'Explain the novel element, relevant existing alternatives/prior art and the basis of differentiation. Mention relevant IP and key open-source/proprietary dependencies.',
-    content: `Existing tea software falls into two extremes: expensive enterprise ERPs built only for large corporate estates (ignoring 1.2 lakh+ Small Tea Growers), or generic blockchain QR startups that merely stamp static PDFs onto retail boxes without verifying physical factory transformations.
+      'Summarize applicant/entity credentials, technical capabilities and relevant experience.',
+    content: `Flugelsoft Labs is an Assam-based technology and data-systems engineering entity led by Kalyanjit Hatibaruah (Lead Applicant). Our team combines deep expertise in offline-first field data collection systems, geospatial resource frames, statistical estimation pipelines, and scalable government-grade web platforms.
 
-Assam TeaTrace's core innovation is Physics-Backed Cryptographic Mass-Balance Traceability tailored for Assam's STG-BLF ecosystem:
-1. Outturn-Bound Custody: By linking digital lot hashes to physical green-leaf-to-made-tea conversion physics (21%–25% moisture-adjusted recovery), the system makes unrecorded leaf substitution mathematically detectable.
-2. Offline-First Edge Sync: Built for rural Upper and Central Assam where 4G drops frequently at collection sheds.
-3. Fractional Split/Blend DAG: Accurately tracks Assam tea across complex multi-garden blends without breaking origin attribution.
-
-Dependencies rely on proven open-source foundations (React, TypeScript, FastAPI, PostgreSQL, GS1 EPCIS 2.0 standards, SHA-256 Merkle verification) with zero vendor lock-in. Rojes Labs will retain IP over the mass-balance reconciliation engine, offline sync middleware, and Assam tea domain schemas.`,
+For NESFIC-D-32, Flugelsoft Labs brings end-to-end capability across survey software engineering, mobile UX for rural field staff, reproducible Python/PostgreSQL statistical pipelines, and on-ground Assam deployment support—working closely with Directorate of Fisheries officers, DES statisticians, and ICAR-CIFRI domain experts.`,
   },
   {
     id: 12,
-    title: '12. Resources, risks & pilot validation',
+    title: '12. Budget & grant utilization plan (₹40.00 Lakhs)',
     promptHint:
-      'Provide indicative development/validation resource and cost drivers, key risks and mitigations. Briefly state how the developed solution would subsequently be pilot-validated in the stated context.',
-    content: `Indicative Resource & Budget Allocation (Total NESFIC-I-08 Grant: ₹40.00 Lakhs over 6 months):
-- Technical Engineering Team Cost: ₹20.00 Lakhs (50%) — covers Lead Systems Architect, Full-Stack/Offline PWA Engineer, Backend/Ledger Engineer, and Embedded Weighbridge Specialist.
-- Field Hardware & Edge Pilot Kits: ₹6.00 Lakhs (15%) — BLE/RS-232 scale bridges, rugged collection-shed tablets, and Bluetooth thermal QR printers/labels for 2 pilot sites.
-- Tea Quality, GI & Compliance Advisory: ₹4.00 Lakhs (10%) — TRA/NABL MRL and STG-BLF domain advisory.
-- India-Region Cloud, Ledger & Security Audit: ₹4.00 Lakhs (10%) — hosting, backups, and security audit.
-- Assam Shadow Pilot, Travel & Training: ₹4.00 Lakhs (10%) — Jorhat/Dibrugarh field deployment and bilingual training.
-- IP Filing, GS1 Standards & Contingency: ₹2.00 Lakhs (5%).
-
-Key risks and mitigations:
-- Low digital literacy at STG sheds: Mitigated via bilingual Assamese/English icon-driven UI, pre-printed QR grower cards, and Smaller than 15-second weighbridge capture.
-- Intermittent rural connectivity: Mitigated via full offline-first local storage and automatic background sync.
-- Weight manipulation or bypassed entries: Mitigated by direct serial/BLE scale capture and automated mass-balance variance alerts.
-
-Pilot Validation Plan: Following Month 5 readiness, Rojes Labs will run a 4-week shadow pilot with TRA Tocklai across 1 Bought-Leaf Factory (10–15 STGs) and 1 heritage estate in Jorhat/Dibrugarh, benchmarking mass-balance accuracy and audit speed against paper logs.`,
+      'Summarize cost heads, justification and alignment with project milestones.',
+    content: `The proposed ₹40.00 Lakhs NESFIC grant is structured for maximum engineering and field-validation impact over 6 months:
+- Technical Engineering & Statistical Systems Team (₹20.00L / 50%): Lead Architect, Survey Statistician, Offline PWA & Backend Engineers building the frame stratifier, digital schedules, and CI estimator.
+- Field Verification & Sample Weighing Kits (₹6.00L / 15%): Rugged tablets and BLE digital scales for sample weighing in Nagaon, Kamrup, and Dima Hasao.
+- Aquaculture Sampling & DES/ICAR-CIFRI Alignment (₹4.00L / 10%): Statistical methodology validation and SOPs.
+- India-Region Cloud, Estimator Engine & Security (₹4.00L / 10%): Hosting, PostGIS infrastructure, and security testing.
+- 3-District Pilot, Enumerator Training & Travel (₹4.00L / 10%): On-ground onboarding and field verification.
+- Documentation & Contingency (₹2.00L / 5%): Audit handbooks and operational buffer.`,
   },
 ];

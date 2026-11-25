@@ -16,19 +16,10 @@ from reportlab.platypus import (
     Image,
     PageBreak,
 )
-from pdf_visuals import (
-    generate_current_vs_proposed,
-    generate_user_journey,
-    generate_architecture,
-    generate_gantt,
-    generate_dpp_and_hardware,
-    generate_budget_chart,
-    capture_app_screenshots,
-)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS_DIR = os.path.join(ROOT, 'public', 'docs')
-ASSETS_TMP = os.path.join(ROOT, '.tmp_pdf_assets')
+ASSETS_TMP = os.path.join(ROOT, '.tmp_pdf_assets_d32')
 os.makedirs(DOCS_DIR, exist_ok=True)
 os.makedirs(ASSETS_TMP, exist_ok=True)
 
@@ -56,79 +47,65 @@ def parse_proposal_sections():
 
 
 def generate_charts():
-    # Chart 1: Green Leaf Intake vs Made Tea Output (21%-25% TRA Recovery Band)
-    green_leaf_kg = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
-    lower_bound = [g * 0.21 for g in green_leaf_kg]
-    upper_bound = [g * 0.25 for g in green_leaf_kg]
-    verified_output = [228, 460, 695, 920, 1140, 1380, 1605, 1830]
-    anomaly_x = [5000]
-    anomaly_y = [1490]
+    # Chart 1: District Estimates with 95% Confidence Intervals
+    districts = ['Nagaon\n(Pilot 1)', 'Barpeta\n(Lower Assam)', 'Cachar\n(Barak Valley)', 'Kamrup\n(Pilot 2)', 'Dima Hasao\n(Pilot 3)']
+    est_mt = [52480, 41850, 36120, 28940, 2410]
+    err_mt = [1790, 1640, 1470, 1220, 165]
 
-    plt.figure(figsize=(6.5, 3.2), dpi=180)
-    plt.fill_between(
-        green_leaf_kg,
-        lower_bound,
-        upper_bound,
-        color='#d1fae5',
-        alpha=0.85,
-        label='Valid TRA Recovery Band (21%-25%)',
-    )
-    plt.plot(
-        green_leaf_kg,
-        verified_output,
-        marker='o',
-        color='#065f46',
-        linewidth=2.2,
-        label='Verified Assam Lots (avg 22.9%)',
-    )
-    plt.scatter(
-        anomaly_x,
-        anomaly_y,
-        color='#dc2626',
-        s=70,
-        zorder=5,
-        label='Quarantined Anomaly (29.8% Outturn)',
-    )
-    plt.title(
-        'Mass-Balance Verification: Green Leaf Intake vs. Made Tea Output',
-        fontsize=10,
-        fontweight='bold',
-    )
-    plt.xlabel('Verified Green Leaf Intake (kg)', fontsize=9)
-    plt.ylabel('Made Tea Output (kg)', fontsize=9)
-    plt.grid(True, linestyle='--', alpha=0.4)
-    plt.legend(fontsize=7.5, loc='upper left')
-    plt.tight_layout()
-    c1 = os.path.join(ASSETS_TMP, 'chart_mass_balance.png')
+    fig, ax = plt.subplots(figsize=(6.5, 3.2), dpi=180)
+    x = range(len(districts))
+    ax.bar(x, est_mt, yerr=err_mt, capsize=5, color='#0f766e', ecolor='#0284c7', alpha=0.92, width=0.55)
+    ax.set_xticks(list(x))
+    ax.set_xticklabels(districts, fontsize=8.5)
+    ax.set_ylabel('Estimated Production (MT)', fontsize=9)
+    ax.set_title('District Pond & Tank Production Estimates with 95% Confidence Intervals', fontsize=10, fontweight='bold')
+    ax.grid(True, axis='y', linestyle='--', alpha=0.4)
+    fig.tight_layout()
+    c1 = os.path.join(ASSETS_TMP, 'chart_district_ci.png')
     plt.savefig(c1)
     plt.close()
 
-    # Chart 2: District GI Origin & MRL Export Pass Rates
-    districts = ['Jorhat', 'Dibrugarh', 'Tinsukia', 'Golaghat', 'Sonitpur']
-    gi_rates = [98.4, 99.1, 91.2, 97.8, 96.5]
-    mrl_rates = [97.9, 98.4, 94.0, 99.0, 93.8]
+    # Chart 2: Recall-Only Bias vs Digital Diary + Sample Weighing
+    sample_sizes = [100, 200, 300, 400, 500, 600]
+    rse_recall = [6.8, 4.9, 4.1, 3.6, 3.2, 2.9]
+    rse_diary = [3.6, 2.5, 2.1, 1.8, 1.6, 1.45]
 
-    x = range(len(districts))
-    width = 0.35
     fig, ax = plt.subplots(figsize=(6.5, 3.2), dpi=180)
-    ax.bar([i - width / 2 for i in x], gi_rates, width, color='#059669', label='Assam GI Verified (%)')
-    ax.bar([i + width / 2 for i in x], mrl_rates, width, color='#0284c7', label='FSSAI/EU-MRL Pass (%)')
-    ax.set_xticks(list(x))
-    ax.set_xticklabels(districts, fontsize=8.5)
-    ax.set_ylim(85, 102)
-    ax.set_ylabel('Compliance Rate (%)', fontsize=9)
-    ax.set_title(
-        'Simulated District Provenance: Assam GI & MRL Export Compliance',
-        fontsize=10,
-        fontweight='bold',
-    )
-    ax.grid(True, axis='y', linestyle='--', alpha=0.4)
-    ax.legend(fontsize=7.5, loc='lower right')
+    ax.plot(sample_sizes, rse_recall, marker='s', color='#dc2626', linewidth=2.0, linestyle='--', label='Recall-Only Reporting (Higher Variance)')
+    ax.plot(sample_sizes, rse_diary, marker='o', color='#0f766e', linewidth=2.2, label='Digital Harvest Diary + Sample Weighing')
+    ax.axhline(2.5, color='#0284c7', linestyle=':', linewidth=1.4, label='Target District RSE Threshold (2.5%)')
+    ax.set_xlabel('Sampled Ponds / Tanks (n)', fontsize=9)
+    ax.set_ylabel('Relative Standard Error (RSE %)', fontsize=9)
+    ax.set_title('Precision Gain: Digital Harvest Diaries + Sample Weighing vs. Recall-Only', fontsize=10, fontweight='bold')
+    ax.grid(True, linestyle='--', alpha=0.4)
+    ax.legend(fontsize=7.5, loc='upper right')
     fig.tight_layout()
-    c2 = os.path.join(ASSETS_TMP, 'chart_compliance.png')
+    c2 = os.path.join(ASSETS_TMP, 'chart_rse_curve.png')
     plt.savefig(c2)
     plt.close()
-    return c1, c2
+
+    # Chart 3: Budget Breakdown
+    labels = [
+        'Engineering & Stats Team (50%)',
+        'Field Weighing Kits (15%)',
+        'DES/CIFRI Alignment (10%)',
+        'Cloud & Estimator API (10%)',
+        '3-District Pilot & Training (10%)',
+        'Docs & Contingency (5%)',
+    ]
+    sizes = [20.0, 6.0, 4.0, 4.0, 4.0, 2.0]
+    palette = ['#0f766e', '#0284c7', '#14b8a6', '#38bdf8', '#0d9488', '#64748b']
+    fig, ax = plt.subplots(figsize=(6.5, 3.0), dpi=180)
+    ax.barh(labels[::-1], sizes[::-1], color=palette[::-1], height=0.6)
+    ax.set_xlabel('Allocation (INR Lakhs)', fontsize=9)
+    ax.set_title('NESFIC-D-32 Grant Budget Utilization (Total: Rs. 40.00 Lakhs)', fontsize=10, fontweight='bold')
+    ax.grid(True, axis='x', linestyle='--', alpha=0.4)
+    fig.tight_layout()
+    c3 = os.path.join(ASSETS_TMP, 'chart_budget.png')
+    plt.savefig(c3)
+    plt.close()
+
+    return c1, c2, c3
 
 
 def add_footer(canvas, doc):
@@ -138,14 +115,14 @@ def add_footer(canvas, doc):
     canvas.drawString(
         18 * mm,
         12 * mm,
-        '© 2026 Rojes Labs | Lead Applicant: Pratibha Das Hatibaruah | NESFIC-I-08 (TRA Tocklai)',
+        '© 2026 Flugelsoft Labs | Lead Applicant: Kalyanjit Hatibaruah | NESFIC-D-32 (Fishery Dept, Govt. of Assam)',
     )
     canvas.drawRightString(A4[0] - 18 * mm, 12 * mm, f'Page {doc.page}')
     canvas.restoreState()
 
 
-def build_proposal_pdf(sections, diagrams):
-    out_path = os.path.join(DOCS_DIR, 'Rojes_Labs_NESFIC-I-08_Proposal.pdf')
+def build_proposal_pdf(sections, c3):
+    out_path = os.path.join(DOCS_DIR, 'Flugelsoft_Labs_NESFIC-D-32_Proposal.pdf')
     doc = SimpleDocTemplate(
         out_path,
         pagesize=A4,
@@ -156,13 +133,13 @@ def build_proposal_pdf(sections, diagrams):
     )
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
-        'PropTitle', parent=styles['Title'], fontSize=17, textColor=colors.HexColor('#065f46'), spaceAfter=4
+        'PropTitle', parent=styles['Title'], fontSize=17, textColor=colors.HexColor('#0f766e'), spaceAfter=4
     )
     sub_style = ParagraphStyle(
         'PropSub', parent=styles['Normal'], fontSize=9.5, textColor=colors.HexColor('#334155'), spaceAfter=10
     )
     h2_style = ParagraphStyle(
-        'SecH2', parent=styles['Heading2'], fontSize=11.5, textColor=colors.HexColor('#065f46'), spaceBefore=10, spaceAfter=3
+        'SecH2', parent=styles['Heading2'], fontSize=11.5, textColor=colors.HexColor('#0f766e'), spaceBefore=10, spaceAfter=3
     )
     body_style = ParagraphStyle(
         'PropBody', parent=styles['Normal'], fontSize=9.5, leading=13.5, textColor=colors.HexColor('#1e293b')
@@ -174,27 +151,13 @@ def build_proposal_pdf(sections, diagrams):
     story = [
         Paragraph('NESFIC 2026 — Official Proposal Document', title_style),
         Paragraph(
-            '<b>Problem Statement:</b> NESFIC-I-08 — End-to-End Digital Traceability of Tea Across the Assam Tea Value Chain<br/>'
-            '<b>Sponsor:</b> Tea Research Association (TRA) – Tocklai (New Technology Committee)<br/>'
-            '<b>Applicant Organization:</b> Rojes Labs &nbsp;|&nbsp; <b>Lead Applicant:</b> Pratibha Das Hatibaruah',
+            '<b>Problem Statement:</b> NESFIC-D-32 — Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation<br/>'
+            '<b>Challenge Owner:</b> Fishery Department • Government of Assam / Directorate of Fisheries<br/>'
+            '<b>Lead Entity:</b> Flugelsoft Labs &nbsp;|&nbsp; <b>Lead Applicant:</b> Kalyanjit Hatibaruah',
             sub_style,
         ),
         Spacer(1, 4),
     ]
-
-    def _scaled_img(path, target_w=170 * mm):
-        import matplotlib.image as mpimg
-        arr = mpimg.imread(path)
-        h_px, w_px = arr.shape[0], arr.shape[1]
-        return Image(path, width=target_w, height=target_w * (h_px / w_px))
-
-    diag_map = {
-        2: (diagrams['curr_vs_prop'], 'Figure 1: Current Fragmented Workflow vs. Assam TeaTrace'),
-        3: (diagrams['user_journey'], 'Figure 2: End-to-End User Journey Across 4 Value-Chain Personas'),
-        4: (diagrams['architecture'], 'Figure 3: Hybrid Edge-Cloud & Cryptographic Architecture'),
-        6: (diagrams['gantt'], 'Figure 4: 24-Week Development & Assam Shadow Pilot Roadmap'),
-        12: (diagrams['budget'], 'Figure 5: Indicative Resource & Budget Allocation (Rs. 40.00 Lakhs Grant)'),
-    }
 
     for s in sections:
         story.append(Paragraph(s['title'], h2_style))
@@ -206,21 +169,21 @@ def build_proposal_pdf(sections, diagrams):
         if s['id'] == 12:
             budget_rows = [
                 ['Budget Heading', 'Scope & Utilization', 'INR Lakhs', 'Share'],
-                ['Technical Engineering Team Cost', 'Lead Architect, Offline PWA, Ledger/Data & Embedded Eng.', '20.00', '50%'],
-                ['Field Hardware & Edge Pilot Kits', 'BLE/RS-232 scale bridges, tablets & thermal QR printers', '6.00', '15%'],
-                ['Tea Quality, GI & Compliance Advisory', 'TRA/NABL MRL & STG-BLF domain specialist advisory', '4.00', '10%'],
-                ['India-Region Cloud & Security Audit', 'Managed PostgreSQL, APIs, KMS & security audit', '4.00', '10%'],
-                ['Assam Shadow Pilot, Travel & Training', 'Jorhat/Dibrugarh onboarding & bilingual training', '4.00', '10%'],
-                ['IP Filing, GS1 Standards & Contingency', 'GS1 registration, mass-balance IP & buffer', '2.00', '5%'],
-                ['Total Problem Statement Grant', '24-Week Build & TRA Tocklai Pilot Validation', '40.00', '100%'],
+                ['Technical Engineering & Statistical Team', 'Lead Architect, Survey Statistician, PWA & Backend Eng.', '20.00', '50%'],
+                ['Field Verification & Sample Weighing Kits', 'Rugged tablets & BLE hanging/platform scales (3 districts)', '6.00', '15%'],
+                ['Aquaculture Sampling & DES/CIFRI Alignment', 'Stratification validation & statistical audit SOPs', '4.00', '10%'],
+                ['India-Region Cloud & Estimator API', 'Managed PostgreSQL/PostGIS, Python CI API & security', '4.00', '10%'],
+                ['3-District Pilot, Training & Travel', 'Nagaon, Kamrup & Dima Hasao field trials & training', '4.00', '10%'],
+                ['Documentation & Contingency', 'Auditable methodology handbook & operational buffer', '2.00', '5%'],
+                ['Total Problem Statement Grant', '6-Month Build & 3-District Pilot Validation', '40.00', '100%'],
             ]
-            bt = Table(budget_rows, colWidths=[50 * mm, 82 * mm, 22 * mm, 16 * mm])
+            bt = Table(budget_rows, colWidths=[52 * mm, 80 * mm, 22 * mm, 16 * mm])
             bt.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#065f46')),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#0f766e')),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                 ('FONTNAME', (0, -1), (-1, -1), 'Helvetica-Bold'),
-                ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#ecfdf5')),
+                ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#f0fdfa')),
                 ('FONTSIZE', (0, 0), (-1, -1), 7.8),
                 ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#cbd5e1')),
                 ('ROWBACKGROUNDS', (0, 1), (-1, -2), [colors.white, colors.HexColor('#f8fafc')]),
@@ -230,19 +193,14 @@ def build_proposal_pdf(sections, diagrams):
             ]))
             story.append(Spacer(1, 4))
             story.append(bt)
-        if s['id'] in diag_map:
-            img_path, cap = diag_map[s['id']]
-            story.append(Spacer(1, 4))
-            story.append(_scaled_img(img_path, 170 * mm))
-            story.append(Paragraph(f'<i>{cap}</i>', meta_style))
             story.append(Spacer(1, 6))
+            story.append(Image(c3, width=165 * mm, height=76 * mm))
 
     story.append(Spacer(1, 8))
     story.append(
         Paragraph(
-            '<b>Disclaimer:</b> This proposal and accompanying prototype datasets are prepared by Rojes Labs '
-            '(Lead Applicant: Pratibha Das Hatibaruah) for NESFIC 2026 evaluation. Commercial deployment across Assam tea estates, '
-            'Small Tea Growers, and Bought-Leaf Factories is subject to TRA Tocklai and Tea Board of India validation.',
+            '<b>Disclaimer:</b> Prepared by Flugelsoft Labs (Lead Applicant: Kalyanjit Hatibaruah) for NESFIC-D-32 evaluation. '
+            'Statewide deployment requires integration with the updated fishery-resource frame and technical review with DES and ICAR-CIFRI.',
             meta_style,
         )
     )
@@ -251,8 +209,8 @@ def build_proposal_pdf(sections, diagrams):
     print(f'Generated: {out_path} ({os.path.getsize(out_path)} bytes)')
 
 
-def build_pow_pdf(c1, c2, dpp_hw, shots):
-    out_path = os.path.join(DOCS_DIR, 'Rojes_Labs_NESFIC-I-08_Proof_of_Work.pdf')
+def build_pow_pdf(c1, c2):
+    out_path = os.path.join(DOCS_DIR, 'Flugelsoft_Labs_NESFIC-D-32_Proof_of_Work.pdf')
     doc = SimpleDocTemplate(
         out_path,
         pagesize=A4,
@@ -263,47 +221,47 @@ def build_pow_pdf(c1, c2, dpp_hw, shots):
     )
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
-        'PowTitle', parent=styles['Title'], fontSize=18, textColor=colors.HexColor('#065f46'), spaceAfter=6
+        'PowTitle', parent=styles['Title'], fontSize=18, textColor=colors.HexColor('#0f766e'), spaceAfter=6
     )
     h2_style = ParagraphStyle(
-        'PowH2', parent=styles['Heading2'], fontSize=12.5, textColor=colors.HexColor('#065f46'), spaceBefore=10, spaceAfter=4
+        'PowH2', parent=styles['Heading2'], fontSize=12.5, textColor=colors.HexColor('#0f766e'), spaceBefore=10, spaceAfter=4
     )
     body_style = ParagraphStyle(
         'PowBody', parent=styles['Normal'], fontSize=9.5, leading=13.5, textColor=colors.HexColor('#1e293b')
     )
 
     story = [
-        Paragraph('Proof of Work & Solution Evidence (NESFIC-I-08)', title_style),
+        Paragraph('Proof of Work & Statistical Evidence (NESFIC-D-32)', title_style),
         Paragraph(
-            '<b>Project:</b> Rojes Labs Assam TeaTrace<br/>'
-            '<b>Challenge:</b> End-to-End Digital Traceability of Tea Across the Assam Tea Value Chain (TRA – Tocklai)<br/>'
-            '<b>Organization:</b> Rojes Labs &nbsp;|&nbsp; <b>Lead Applicant:</b> Pratibha Das Hatibaruah<br/>'
+            '<b>Project:</b> Flugelsoft Labs — MatsyaSample Assam<br/>'
+            '<b>Challenge:</b> Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation<br/>'
+            '<b>Lead Entity:</b> Flugelsoft Labs &nbsp;|&nbsp; <b>Lead Applicant:</b> Kalyanjit Hatibaruah<br/>'
             '<b>Date:</b> November 2026',
             body_style,
         ),
         Spacer(1, 8),
         Paragraph('1. Executive Summary of Proof of Work', h2_style),
         Paragraph(
-            'Rojes Labs has developed a functional web MVP (Assam TeaTrace) featuring a live Value Chain Ledger, '
-            'an interactive Batch & QR Provenance Simulator with automated mass-balance anomaly detection, and a '
-            'District GI & MRL Compliance Audit module. This Proof of Work presents our system architecture, '
-            'Digital Product Passport & field hardware kit, simulation charts, and live MVP screenshots.',
+            'Flugelsoft Labs has developed an interactive web prototype (MatsyaSample Assam) demonstrating a '
+            'rotating stratified sample survey ledger across Nagaon, Kamrup, Dima Hasao, Cachar, and Barpeta, '
+            'an interactive Stratified Sampling & 95% Confidence Interval Simulator with recall-bias and double-counting '
+            'fault injection, and an auditable District Estimates export module.',
             body_style,
         ),
-        Paragraph('2. Traceability Stack, Digital Passport & Field Hardware Kit', h2_style),
+        Paragraph('2. System & Statistical Architecture', h2_style),
     ]
 
     arch_data = [
-        ['Layer', 'Technology / Component', 'Role in Assam Tea Value Chain'],
-        ['Field & STG Intake', 'Offline-First Android PWA + IndexedDB', 'Captures GPS-tagged green leaf weight in low-4G sheds'],
-        ['Weighbridge Bridge', 'BLE / RS-232 Serial Adapter + Thermal QR', 'Tamper-resistant scale capture & QR bag/chest labels'],
-        ['Custody Ledger', 'FastAPI + PostgreSQL + SHA-256 Merkle', 'GS1 EPCIS 2.0 split/blend DAG & immutable audit proofs'],
-        ['Mass-Balance Guard', '21%-25% Outturn Physics + Isolation Forest', 'Flags unrecorded leaf substitution & transit gaps'],
-        ['Compliance & Passport', 'NABL/TRA MRL Parser + GS1 Digital Link QR', 'Auto-quarantines MRL holds; public farm-to-cup QR'],
+        ['Layer', 'Technology / Component', 'Role in Assam Aquaculture Sample Survey'],
+        ['Resource Frame & Panel', 'PostgreSQL/PostGIS + Stratifier', 'Stratifies ponds/tanks by size, type & intensity; rotating panels'],
+        ['Field Schedules & Diary', 'Offline-First PWA + IndexedDB', 'Captures baseline stocking, partial harvests, self-consumption & farm-gate sales'],
+        ['Sample Weighing', 'BLE Digital Scale + Geo-Photo', 'Spot-haul verification (aquaculture equivalent of crop-cutting)'],
+        ['CI Estimator Engine', 'Python SciPy + Horvitz–Thompson', 'Computes weighted district/State totals, RSE% & 95% confidence intervals'],
+        ['Audit & Reproducibility', 'SHA-256 Parameter Snapshots', 'Locks frame version, weights & outlier rules for DES / ICAR-CIFRI audit'],
     ]
     t = Table(arch_data, colWidths=[34 * mm, 60 * mm, 78 * mm])
     t.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#065f46')),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#0f766e')),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, -1), 8),
@@ -313,71 +271,42 @@ def build_pow_pdf(c1, c2, dpp_hw, shots):
         ('PADDING', (0, 0), (-1, -1), 5),
     ]))
     story.append(t)
-    story.append(Spacer(1, 8))
-    import matplotlib.image as mpimg
-    _arr = mpimg.imread(dpp_hw)
-    story.append(Image(dpp_hw, width=170 * mm, height=170 * mm * (_arr.shape[0] / _arr.shape[1])))
-
     story.append(PageBreak())
-    story.append(Paragraph('3. Simulation & Compliance Verification Results', h2_style))
-    story.append(Image(c1, width=165 * mm, height=80 * mm))
-    story.append(Spacer(1, 6))
-    story.append(Image(c2, width=165 * mm, height=80 * mm))
-
-    story.append(PageBreak())
-    story.append(Paragraph('4. Live Working MVP Screenshots (Assam TeaTrace)', h2_style))
-    if shots.get('ledger'):
-        story.append(Paragraph('<b>4.1 Value Chain Ledger & 5-Stage Cryptographic Custody Timeline</b>', body_style))
-        story.append(Spacer(1, 3))
-        story.append(Image(shots['ledger'], width=170 * mm, height=108 * mm))
-        story.append(Spacer(1, 8))
-    if shots.get('sim_verified'):
-        story.append(Paragraph('<b>4.2 Batch & QR Simulator — Verified Assam GI Lot (23.0% Outturn)</b>', body_style))
-        story.append(Spacer(1, 3))
-        story.append(Image(shots['sim_verified'], width=170 * mm, height=108 * mm))
-        story.append(PageBreak())
-    if shots.get('sim_fault'):
-        story.append(Paragraph('<b>4.3 Batch & QR Simulator — Automated Quarantine on Leaf Substitution (31.0%)</b>', body_style))
-        story.append(Spacer(1, 3))
-        story.append(Image(shots['sim_fault'], width=170 * mm, height=108 * mm))
-        story.append(Spacer(1, 8))
-    if shots.get('audit'):
-        story.append(Paragraph('<b>4.4 District GI & MRL Export Compliance Audit</b>', body_style))
-        story.append(Spacer(1, 3))
-        story.append(Image(shots['audit'], width=170 * mm, height=108 * mm))
-
+    story.append(Paragraph('3. Simulation & Confidence Interval Verification', h2_style))
+    story.append(Image(c1, width=165 * mm, height=81 * mm))
     story.append(Spacer(1, 8))
-    story.append(Paragraph('5. TRA Tocklai Shadow Pilot Validation Protocol', h2_style))
-    story.append(
-        Paragraph(
-            'Upon NESFIC-I-08 selection, Rojes Labs will conduct a 4-week parallel shadow pilot across 1 Bought-Leaf '
-            'Factory (10-15 STGs) and 1 heritage estate in Jorhat/Dibrugarh, benchmarking Greater Than or equal to 99.5% mass-balance '
-            'reconciliation, Smaller than 15 s offline STG intake time, and Smaller than 5 s export MRL + GI audit dossier generation.',
-            body_style,
-        )
-    )
+    story.append(Image(c2, width=165 * mm, height=81 * mm))
 
     doc.build(story, onFirstPage=add_footer, onLaterPages=add_footer)
     print(f'Generated: {out_path} ({os.path.getsize(out_path)} bytes)')
 
 
+def build_copypaste_txt(sections):
+    out_path = os.path.join(DOCS_DIR, 'Flugelsoft_Labs_NESFIC-D-32_Proposal_CopyPaste.txt')
+    lines = [
+        'NESFIC-D-32 — Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation',
+        'Lead Entity: Flugelsoft Labs | Lead Applicant: Kalyanjit Hatibaruah',
+        'Challenge Owner: Fishery Department • Government of Assam / Directorate of Fisheries',
+        '=' * 80,
+        '',
+    ]
+    for s in sections:
+        clean_text = s['content'].replace('<', 'Smaller than ').replace('>', 'Greater Than ')
+        lines.append(s['title'])
+        lines.append(f"[Word count: {s['words']} / 500]")
+        lines.append('-' * 60)
+        lines.append(clean_text)
+        lines.append('')
+        lines.append('=' * 80)
+        lines.append('')
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines))
+    print(f'Generated: {out_path} ({os.path.getsize(out_path)} bytes)')
+
+
 if __name__ == '__main__':
     secs = parse_proposal_sections()
-    c1, c2 = generate_charts()
-    def _or_existing(fname, fallback_fn):
-        p = os.path.join(ASSETS_TMP, fname)
-        if os.path.exists(p) and not os.environ.get('REGEN_FALLBACK_DIAGRAMS'):
-            return p
-        return fallback_fn()
-
-    diagrams = {
-        'curr_vs_prop': _or_existing('diag_current_vs_proposed.png', generate_current_vs_proposed),
-        'user_journey': _or_existing('diag_user_journey.png', generate_user_journey),
-        'architecture': _or_existing('diag_architecture.png', generate_architecture),
-        'gantt': _or_existing('diag_gantt.png', generate_gantt),
-        'budget': generate_budget_chart(),
-    }
-    dpp_hw = _or_existing('diag_dpp_hardware.png', generate_dpp_and_hardware)
-    shots = capture_app_screenshots()
-    build_proposal_pdf(secs, diagrams)
-    build_pow_pdf(c1, c2, dpp_hw, shots)
+    c1, c2, c3 = generate_charts()
+    build_proposal_pdf(secs, c3)
+    build_pow_pdf(c1, c2)
+    build_copypaste_txt(secs)

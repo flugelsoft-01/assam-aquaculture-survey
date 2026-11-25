@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .tmp_pdf_assets/
+.tmp_pdf_assets_d32/
 scripts/__pycache__/
 .DS_Store
 *.tsbuildinfo

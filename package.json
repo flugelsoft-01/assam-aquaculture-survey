@@ -1,9 +1,9 @@
 {
-  "name": "rojes-assam-teatrace",
+  "name": "flugelsoft-matsyasample-nesfic-d32",
   "private": true,
   "version": "1.0.0",
-  "description": "Rojes Labs Assam TeaTrace: End-to-End Digital Traceability of Tea Across the Assam Tea Value Chain (NESFIC-I-08) for TRA Tocklai.",
-  "author": "Pratibha Das Hatibaruah — Rojes Labs",
+  "description": "Flugelsoft Labs MatsyaSample Assam: Scientific Sample Survey for Pond and Tank Aquaculture Production Estimation (NESFIC-D-32) for Fishery Department, Government of Assam.",
+  "author": "Kalyanjit Hatibaruah — Flugelsoft Labs",
   "type": "module",
   "scripts": {
     "dev": "vite",
